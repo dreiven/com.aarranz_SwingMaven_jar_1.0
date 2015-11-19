@@ -6,19 +6,15 @@
 package swig;
 
 import java.awt.*;
-import java.awt.Image;
 import java.awt.event.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.ImageIcon;
 import javax.swing.border.*;
-import static swig.NewJFrame.getConex;
 
 /**
  *
@@ -29,9 +25,9 @@ public class loginTabla extends javax.swing.JFrame {
     /**
      * Creates new form loginTabla
      */
-    
-    private DefaultListModel modeloList=new DefaultListModel() ;
-    ResultSet resultIni=null;
+    private DefaultListModel modeloList = new DefaultListModel();
+    ResultSet resultIni = null;
+
     private void accionSalir(ActionEvent e) {
         salir();
     }
@@ -53,23 +49,11 @@ public class loginTabla extends javax.swing.JFrame {
 
     private void createUIComponents() {
     }
-    
+
     public loginTabla() {
-      
-             
+
         initComponents();
-        
-        Statement sentencia = null;
-        try {
-           sentencia = getConex().createStatement();
-           resultIni = consultaInicial();
-           modeloList.addElement(resultIni.getMetaData().getTableName(1));
-           modeloList.addElement(resultIni.getMetaData().getTableName(2));
-           modeloList.addElement(resultIni.getMetaData().getTableName(3));
-           list1.setModel(modeloList);
-        } catch (Exception e) {
-        }
-        
+        consultaInicial(modeloList, list1);
 
     }
 
@@ -265,27 +249,30 @@ public class loginTabla extends javax.swing.JFrame {
 
         return conexion;
     }
-        public static ResultSet consultaInicial() {
+
+    public static JList consultaInicial(DefaultListModel modeloList, JList list) {
         ResultSet result = null;
         Statement sentencia = null;
-      
+
         try {
             //se crea el objeto Statement para realizar una consulta la bbdd con los datos a traves de la conexion creada anteriormente 
             sentencia = getConex().createStatement();
             //se crea objeto ResulSet para almacenar el valor obtenido por la consulta SQL realizada por el obj Statement
-           result = sentencia.executeQuery("SHOW FULL TABLES FROM control");
+            result = sentencia.executeQuery("SHOW FULL TABLES FROM control");
+            while (result.next()) {
+                System.out.println(result.getString(WIDTH));
 
+                modeloList.addElement(result.getString(1));
+
+                list.setModel(modeloList);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
-          return result;
+        return list;
     }
-    
-    
-    
-    
-    
-    public static Boolean comprobacionUsuario(String user, String pass) {
+
+    public static Boolean comprobacionUsuario(String user, String pass) throws SQLException {
 
         getConex();
         ResultSet result = null;
@@ -294,35 +281,36 @@ public class loginTabla extends javax.swing.JFrame {
         try {
             //se crea el objeto Statement para realizar una consulta la bbdd con los datos a traves de la conexion creada anteriormente 
             sentencia = getConex().createStatement();
-//            result = sentencia.executeQuery("SELECT * FROM control.usuarios WHERE Nombre = '" + user + "'AND Password ='" + pass + "'");
-            result = sentencia.executeQuery("SELECT * FROM control.usuarios ");
-            if(result.next()){
-            }    
-            if ((result.getString("Nombre").compareTo(user) == 0 && result.getString("Password").compareTo(pass) == 0)) {
-               
-                System.out.println("Usuario encontrado");
+            result = sentencia.executeQuery("SELECT * FROM control.usuarios WHERE Nombre = '" + user + "'AND Password ='" + pass + "'");
+            while (result.next()) {
+//            result = sentencia.executeQuery("SELECT * FROM control.usuarios ");
+//            while(result.next()) {
+//            
+//            if ((result.getString("Nombre").compareTo(user) == 0 && result.getString("Password").compareTo(pass) == 0)) {
+//
+//                System.out.println("Usuario encontrado");
+//                return true;
+//            }
+//            if (result.getString("Nombre").compareToIgnoreCase(user) == -1 && result.getString("Password").compareTo(pass) == 0) {
+//
+//                System.out.println("Usuario no encontrado");
+//                return false;
+//
+//            }
+//            if ((result.getString("Nombre").compareTo(user) == 0 && result.getString("Password").compareTo(pass) == -1)) {
+//                System.out.println("Password Fallado");
+//                return false;
+//            } else {
+//
+//                System.out.println("Debe introducir un Usuario y un Password Correctos");
                 return true;
             }
-            if (result.getString("Nombre").compareToIgnoreCase(user) == -1 && result.getString("Password").compareTo(pass) == 0 ) {
-
-                System.out.println("Usuario no encontrado");
-                return false;
-
-            }
-            if ((result.getString("Nombre").compareTo(user) == 0 && result.getString("Password").compareTo(pass) == -1)){
-                System.out.println("Password Fallado");
-                return false;
-            } else {
-
-                 System.out.println("Debe introducir un Usuario y un Password Correctos");
-                return false;
-
-            }
-            
+//            }
+//}
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        System.out.println("No ha introducido datos correctos");
         return false;
     }
 
