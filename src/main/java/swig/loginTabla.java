@@ -15,6 +15,7 @@ import java.sql.Statement;
 import javax.swing.*;
 import javax.swing.ImageIcon;
 import javax.swing.border.*;
+import javax.swing.event.*;
 
 /**
  *
@@ -48,6 +49,11 @@ public class loginTabla extends javax.swing.JFrame {
     }
 
     private void createUIComponents() {
+    }
+
+    private void list1ValueChanged(ListSelectionEvent e) {
+        
+    
     }
 
     public loginTabla() {
@@ -150,10 +156,20 @@ public class loginTabla extends javax.swing.JFrame {
 
             //======== scrollPane1 ========
             {
+                scrollPane1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+                scrollPane1.setBorder(null);
+
+                //---- list1 ----
+                list1.addListSelectionListener(new ListSelectionListener() {
+                    @Override
+                    public void valueChanged(ListSelectionEvent e) {
+                        list1ValueChanged(e);
+                    }
+                });
                 scrollPane1.setViewportView(list1);
             }
             jPanel1.add(scrollPane1);
-            scrollPane1.setBounds(40, 375, 90, 65);
+            scrollPane1.setBounds(25, 365, 90, 85);
 
             //---- jLabel1 ----
             jLabel1.setIcon(new ImageIcon("C:\\Users\\PC\\Documents\\NetBeansProjects\\com.aarranz_SwingMaven_jar_1.0\\src\\main\\java\\swig\\img\\frame.png"));
