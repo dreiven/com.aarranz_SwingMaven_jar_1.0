@@ -34,27 +34,21 @@ public class NewJFrame extends javax.swing.JFrame {
     /**
      * Creates new form NewJFrame
      */
-    //String con la direccion de la bbdd en el servidor 
-    String url = "jdbc:mysql://localhost:3306/control";
-    //usuario en String
-    String user = "root";
-    //password en String
-    String password = "";
     ResultSet result;
     String[] columns = {"idLibro", "Autor", "titulo"};
-    DefaultTableModel modelo = new DefaultTableModel(columns,0);
-    private DefaultListModel modeloLista=new DefaultListModel();
+    DefaultTableModel modelo = new DefaultTableModel(columns, 0);
+    private DefaultListModel modeloLista = new DefaultListModel();
 
     public NewJFrame() throws SQLException {
         initComponents();
-        getConex(url, user, password);
-       result = consultaInicial(url, user, password);
-       jTextField1.setText(result.getMetaData().getCatalogName(WIDTH));
+        getConex();
+        result = consultaInicial();
+        jTextField1.setText(result.getMetaData().getCatalogName(WIDTH));
 //      jList1.add(result.getMetaData().getColumnName(0));
 //      modeloLista.addElement(result.getMetaData().getColumnName(1));
         modeloLista.addElement(result.getMetaData().getSchemaName(2));
         modeloLista.addElement(result.getMetaData().getTableName(1));
-        modeloLista.addElement(result.getMetaData().getColumnLabel(1));
+        modeloLista.addElement(result.getMetaData().getTableName(3));
         jList1.setModel(modeloLista);
     }
 
@@ -276,7 +270,7 @@ public class NewJFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void accionMostrar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accionMostrar
-        CargaBaseDatos(modelo, jTable1,jLabel2);
+        CargaBaseDatos(modelo, jTable1, jLabel2);
     }//GEN-LAST:event_accionMostrar
 
     private void accionSalir(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accionSalir
@@ -334,10 +328,15 @@ public class NewJFrame extends javax.swing.JFrame {
         });
     }
 
-    public static Connection getConex(String url, String user, String password) {
+    public static Connection getConex() {
         //se declara el objeto COnnection con la referencia conexion a null 
         java.sql.Connection conexion = null;
-
+        //String con la direccion de la bbdd en el servidor 
+        String url = "jdbc:mysql://localhost:3306/control";
+        //usuario en String
+        String user = "root";
+        //password en String
+        String password = "";
         try {
             //le asignamos parametros(url , user y password) para conectar al objeto conexion a traves del metodo Druvermanager.getConnection
             conexion = DriverManager.getConnection(url, user, password);
@@ -348,100 +347,88 @@ public class NewJFrame extends javax.swing.JFrame {
         return conexion;
     }
 
-    public static ResultSet consultaTodos(String url, String user, String password) {
+    public static ResultSet consultaTodos() {
         ResultSet result = null;
-        Statement sentencia=null;
+        Statement sentencia = null;
         String res;
         try {
             //se crea el objeto Statement para realizar una consulta la bbdd con los datos a traves de la conexion creada anteriormente 
-            sentencia = getConex(url, user, password).createStatement();
+            sentencia = getConex().createStatement();
             //se crea objeto ResulSet para almacenar el valor obtenido por la consulta SQL realizada por el obj Statement
             res = JOptionPane.showInputDialog("Que tabla desea abrir archivos o usuarios ");
-            
-            result = sentencia.executeQuery("SELECT * FROM "+res);
+
+            result = sentencia.executeQuery("SELECT * FROM " + res);
 
         } catch (Exception e) {
         }
-          return result;
+        return result;
     }
-    public static ResultSet consultaInicial(String url, String user, String password) {
+
+    public static ResultSet consultaInicial() {
         ResultSet result = null;
-        Statement sentencia=null;
+        Statement sentencia = null;
         String res;
         try {
             //se crea el objeto Statement para realizar una consulta la bbdd con los datos a traves de la conexion creada anteriormente 
-            sentencia = getConex(url, user, password).createStatement();
+            sentencia = getConex().createStatement();
             //se crea objeto ResulSet para almacenar el valor obtenido por la consulta SQL realizada por el obj Statement
-           result = sentencia.executeQuery("SELECT * FROM control.archivos");
+            result = sentencia.executeQuery("SELECT * FROM control.archivos");
 
         } catch (Exception e) {
         }
-          return result;
+        return result;
     }
-  public static void borrarTabla(){
-      try {
-            Statement sentencia = getConex("jdbc:mysql://localhost:3306/Control", "root", "").createStatement();
-                /* ejecuta la sentencia de borrado */
-                int filasAfectadas;
 
-                filasAfectadas = sentencia.executeUpdate("DELETE FROM control.archivos WHERE 1=1");
-                System.out.println("Filas afectadas: " + filasAfectadas);
-      } catch (Exception e) {
-          Logger.getLogger(e.getMessage());
-      }
-  
-  
-  
-  
-  
-  
-  }
-  
-  
-  public static JTable insertarDatos(JTable tabla){
-      try {
-            Statement sentencia = getConex("jdbc:mysql://localhost:3306/control", "root", "").createStatement();
-                /* ejecuta la sentencia de borrado */
-                int filasAfectadas;
-                String res;
-                int value1=0;
-                String resValue1="";
-                String value2="";
-                String value3="";
-                res = JOptionPane.showInputDialog("Que tabla desea modificar usuarios o archivos");
-                resValue1 = JOptionPane.showInputDialog("Inserte primer valor");
-                value1 = Integer.parseInt(resValue1);
-                value2 = JOptionPane.showInputDialog("Inserte segundo valor");
-                value3 = JOptionPane.showInputDialog("Inserte tercer valor");
-                filasAfectadas = sentencia.executeUpdate("INSERT INTO "+res +" VALUES" + "(" + value1 + value2 + value3 + ")");
-                System.out.println("Filas afectadas: " + filasAfectadas);
-      } catch (Exception e) {
-          Logger.getLogger(e.getMessage());
-      }
-  
-  
-  
-  
-  return tabla;
-  
-  }
-    public static DefaultTableModel CargaBaseDatos(DefaultTableModel modelo, JTable tabla,JLabel jLabel2) {
+    public static void borrarTabla() {
+        try {
+            Statement sentencia = getConex().createStatement();
+            /* ejecuta la sentencia de borrado */
+            int filasAfectadas;
+
+            filasAfectadas = sentencia.executeUpdate("DELETE FROM control.archivos WHERE 1=1");
+            System.out.println("Filas afectadas: " + filasAfectadas);
+        } catch (Exception e) {
+            Logger.getLogger(e.getMessage());
+        }
+
+    }
+
+    public static JTable insertarDatos(JTable tabla) {
+        try {
+            Statement sentencia = getConex().createStatement();
+
+            int filasAfectadas;
+            String res;
+            int value1 = 0;
+            String resValue1 = "";
+            String value2;
+            String value3;
+//                res = JOptionPane.showInputDialog("Que tabla desea modificar usuarios o archivos");
+            resValue1 = JOptionPane.showInputDialog("Inserte primer valor");
+            value1 = Integer.parseInt(resValue1);
+            value2 = JOptionPane.showInputDialog("Inserte segundo valor");
+            value3 = JOptionPane.showInputDialog("Inserte tercer valor");
+            filasAfectadas = sentencia.executeUpdate("INSERT INTO archivos VALUES" + "(" + value1 + value2 + value3 + ")");
+            System.out.println("Filas afectadas: " + filasAfectadas);
+        } catch (Exception e) {
+            Logger.getLogger(e.getMessage());
+        }
+
+        return tabla;
+
+    }
+
+    public static DefaultTableModel CargaBaseDatos(DefaultTableModel modelo, JTable tabla, JLabel jLabel2) {
         //se declara condicion para que no repinte la tabla con los mismos datos una y otra vez
         //,si el modelo contiene menos de 0 filas accede
         tabla.setModel(modelo);
-        
 
         /////////////////////REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE//////////////////////
         if (modelo.getRowCount() <= 1) {
             try {
-                //String con la direccion de la bbdd en el servidor 
-                String url = "jdbc:mysql://localhost:3306/control";
-                //usuario en String
-                String user = "root";
-                //password en String
-                String password = "";
+             
                 //se crea el objeto Statement para realizar una consulta la bbdd con los datos a traves de la conexion creada anteriormente 
-                Statement sentencia = getConex(url, user, password).createStatement();
+                Statement sentencia = getConex().createStatement();
                 //se crea objeto ResulSet para almacenar el valor obtenido por la consulta SQL realizada por el obj Statement
                 ResultSet result = sentencia.executeQuery("SELECT * FROM archivos ");
                 //declaramos objetos para guardar los resultados obtenidos para la tabla
@@ -467,7 +454,7 @@ public class NewJFrame extends javax.swing.JFrame {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        //para referescar la tabla despues de cada llamada al metodo , da problemas ya que desaparecen los demas componentes del panel
+            //para referescar la tabla despues de cada llamada al metodo , da problemas ya que desaparecen los demas componentes del panel
 //         tabla.updateUI();
         }
         return modelo;

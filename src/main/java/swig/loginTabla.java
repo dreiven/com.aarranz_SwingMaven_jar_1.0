@@ -5,19 +5,20 @@
  */
 package swig;
 
-
 import java.awt.*;
 import java.awt.Image;
 import java.awt.event.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.ImageIcon;
 import javax.swing.border.*;
-
+import static swig.NewJFrame.getConex;
 
 /**
  *
@@ -29,38 +30,47 @@ public class loginTabla extends javax.swing.JFrame {
      * Creates new form loginTabla
      */
     
-    
-    
-    
-    ImageIcon gc; 
+    private DefaultListModel modeloList=new DefaultListModel() ;
+    ResultSet resultIni=null;
     private void accionSalir(ActionEvent e) {
         salir();
     }
 
-    private void accionLogin(ActionEvent e)  {
-//        String user ="root";
-//        String  pass="";
-//        String url="jdbc:mysql://localhost:3306/control";
+    private void accionLogin(ActionEvent e) {
+
         try {
-//            getConex(url,user,pass);
-            NewJFrame ventana = new NewJFrame();
-            ventana.setVisible(true);
-           
+
+            getConex();
+
+            if (comprobacionUsuario(textField1.getText(), passwordField1.getText())) {
+                NewJFrame ventana = new NewJFrame();
+                ventana.setVisible(true);
+            }
         } catch (Exception ex) {
         }
-        
-        
-        
+
     }
 
     private void createUIComponents() {
-        // TODO: add custom component creation code here
     }
-
+    
     public loginTabla() {
-        gc = new ImageIcon("img/frame.png");
+      
+             
         initComponents();
         
+        Statement sentencia = null;
+        try {
+           sentencia = getConex().createStatement();
+           resultIni = consultaInicial();
+           modeloList.addElement(resultIni.getMetaData().getTableName(1));
+           modeloList.addElement(resultIni.getMetaData().getTableName(2));
+           modeloList.addElement(resultIni.getMetaData().getTableName(3));
+           list1.setModel(modeloList);
+        } catch (Exception e) {
+        }
+        
+
     }
 
     /**
@@ -237,24 +247,86 @@ public class loginTabla extends javax.swing.JFrame {
         });
     }
 
-    public void salir (){
-    System.exit(0);
-    
-    
+    public void salir() {
+        System.exit(0);
+
     }
-    public static Connection getConex (String url, String user,String password){
+
+    public static Connection getConex() {
+        String user = "root";
+        String pass = "";
+        String url = "jdbc:mysql://localhost:3306/control";
         Connection conexion = null;
         try {
-              conexion = DriverManager.getConnection(url,user,password);
+            conexion = DriverManager.getConnection(url, user, pass);
         } catch (Exception e) {
-            
+
         }
-       
-    
-    return conexion;
+
+        return conexion;
+    }
+        public static ResultSet consultaInicial() {
+        ResultSet result = null;
+        Statement sentencia = null;
+      
+        try {
+            //se crea el objeto Statement para realizar una consulta la bbdd con los datos a traves de la conexion creada anteriormente 
+            sentencia = getConex().createStatement();
+            //se crea objeto ResulSet para almacenar el valor obtenido por la consulta SQL realizada por el obj Statement
+           result = sentencia.executeQuery("SHOW FULL TABLES FROM control");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+          return result;
     }
     
     
+    
+    
+    
+    public static Boolean comprobacionUsuario(String user, String pass) {
+
+        getConex();
+        ResultSet result = null;
+        Statement sentencia = null;
+
+        try {
+            //se crea el objeto Statement para realizar una consulta la bbdd con los datos a traves de la conexion creada anteriormente 
+            sentencia = getConex().createStatement();
+//            result = sentencia.executeQuery("SELECT * FROM control.usuarios WHERE Nombre = '" + user + "'AND Password ='" + pass + "'");
+            result = sentencia.executeQuery("SELECT * FROM control.usuarios ");
+            if(result.next()){
+            }    
+            if ((result.getString("Nombre").compareTo(user) == 0 && result.getString("Password").compareTo(pass) == 0)) {
+               
+                System.out.println("Usuario encontrado");
+                return true;
+            }
+            if (result.getString("Nombre").compareToIgnoreCase(user) == -1 && result.getString("Password").compareTo(pass) == 0 ) {
+
+                System.out.println("Usuario no encontrado");
+                return false;
+
+            }
+            if ((result.getString("Nombre").compareTo(user) == 0 && result.getString("Password").compareTo(pass) == -1)){
+                System.out.println("Password Fallado");
+                return false;
+            } else {
+
+                 System.out.println("Debe introducir un Usuario y un Password Correctos");
+                return false;
+
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // Generated using JFormDesigner Evaluation license - Albert Av
     private JPanel jPanel1;
