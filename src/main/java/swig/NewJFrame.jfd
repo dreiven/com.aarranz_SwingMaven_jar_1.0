@@ -56,6 +56,8 @@ new FormModel {
 			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
 				name: "jTextField1"
+				"editable": false
+				"font": new java.awt.Font( "Tahoma", 3, 11 )
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "jTextField1ActionPerformed", true ) )
 			} )
 			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {

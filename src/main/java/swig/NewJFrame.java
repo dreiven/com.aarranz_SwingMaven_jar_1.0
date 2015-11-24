@@ -7,6 +7,7 @@ package swig;
 
 import java.awt.*;
 import java.awt.event.*;
+import static java.awt.image.ImageObserver.WIDTH;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -24,6 +25,7 @@ import javax.swing.LayoutStyle;
 import javax.swing.table.DefaultTableModel;
 import org.jdesktop.beansbinding.*;
 import org.jdesktop.beansbinding.AutoBinding.UpdateStrategy;
+import static swig.loginTabla.getConex;
 
 /**
  *
@@ -35,21 +37,21 @@ public class NewJFrame extends javax.swing.JFrame {
      * Creates new form NewJFrame
      */
     ResultSet result;
-    String[] columns = {"idLibro", "Autor", "titulo"};
-    DefaultTableModel modelo = new DefaultTableModel(columns, 0);
+//    String[] columns = {"idLibro", "Autor", "titulo"};
+    DefaultTableModel modelo = new DefaultTableModel();
     private DefaultListModel modeloLista = new DefaultListModel();
 
     public NewJFrame() throws SQLException {
         initComponents();
         getConex();
-        result = consultaInicial();
-        jTextField1.setText(result.getMetaData().getCatalogName(WIDTH));
-//      jList1.add(result.getMetaData().getColumnName(0));
-//      modeloLista.addElement(result.getMetaData().getColumnName(1));
-        modeloLista.addElement(result.getMetaData().getSchemaName(2));
-        modeloLista.addElement(result.getMetaData().getTableName(1));
-        modeloLista.addElement(result.getMetaData().getTableName(3));
-        jList1.setModel(modeloLista);
+        result = consultaInicial(modeloLista, jList1, jTextField1);
+
+////      jList1.add(result.getMetaData().getColumnName(0));
+////      modeloLista.addElement(result.getMetaData().getColumnName(1));
+//        modeloLista.addElement(result.getMetaData().getSchemaName(2));
+//        modeloLista.addElement(result.getMetaData().getTableName(1));
+//        modeloLista.addElement(result.getMetaData().getTableName(3));
+//        jList1.setModel(modeloLista);
     }
 
     /**
@@ -171,6 +173,8 @@ public class NewJFrame extends javax.swing.JFrame {
         jLabel4.setText("Base de Datos");
 
         //---- jTextField1 ----
+        jTextField1.setEditable(false);
+        jTextField1.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 11));
         jTextField1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -270,7 +274,7 @@ public class NewJFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void accionMostrar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accionMostrar
-        CargaBaseDatos(modelo, jTable1, jLabel2);
+        CargaBaseDatos(modelo, jTable1, jLabel2, jList1);
     }//GEN-LAST:event_accionMostrar
 
     private void accionSalir(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accionSalir
@@ -364,17 +368,25 @@ public class NewJFrame extends javax.swing.JFrame {
         return result;
     }
 
-    public static ResultSet consultaInicial() {
+    public static ResultSet consultaInicial(DefaultListModel modeloList, JList list, JTextField texto) {
         ResultSet result = null;
         Statement sentencia = null;
-        String res;
+
         try {
             //se crea el objeto Statement para realizar una consulta la bbdd con los datos a traves de la conexion creada anteriormente 
             sentencia = getConex().createStatement();
             //se crea objeto ResulSet para almacenar el valor obtenido por la consulta SQL realizada por el obj Statement
-            result = sentencia.executeQuery("SELECT * FROM control.archivos");
+            result = sentencia.executeQuery("SHOW FULL TABLES FROM control");
+            while (result.next()) {
+                System.out.println(result.getString(WIDTH));
 
-        } catch (Exception e) {
+                modeloList.addElement(result.getString(1));
+                texto.setText("control");
+                list.setModel(modeloList);
+
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(loginTabla.class.getName()).log(Level.SEVERE, null, ex);
         }
         return result;
     }
@@ -408,47 +420,209 @@ public class NewJFrame extends javax.swing.JFrame {
             value1 = Integer.parseInt(resValue1);
             value2 = JOptionPane.showInputDialog("Inserte segundo valor");
             value3 = JOptionPane.showInputDialog("Inserte tercer valor");
-            filasAfectadas = sentencia.executeUpdate("INSERT INTO archivos VALUES" + "(" + value1 + value2 + value3 + ")");
+            filasAfectadas = sentencia.executeUpdate("INSERT INTO archivos VALUES" + "('" + value1 + "')");
             System.out.println("Filas afectadas: " + filasAfectadas);
-        } catch (Exception e) {
-            Logger.getLogger(e.getMessage());
+        } catch (Exception ex) {
+            Logger.getLogger(loginTabla.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return tabla;
 
     }
 
-    public static DefaultTableModel CargaBaseDatos(DefaultTableModel modelo, JTable tabla, JLabel jLabel2) {
+    public static DefaultTableModel CargaBaseDatos(DefaultTableModel modelo, JTable tabla, JLabel jLabel2, JList lista) {
         //se declara condicion para que no repinte la tabla con los mismos datos una y otra vez
         //,si el modelo contiene menos de 0 filas accede
-        tabla.setModel(modelo);
-
-        /////////////////////REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE//////////////////////
-        if (modelo.getRowCount() <= 1) {
+        
+        int opcion=0;
+        
+        Statement sentencia=null;
+        
+        /////////////////////REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE//////////////////////no entra
+        if (modelo.getRowCount()>1) {
+             while (modelo.getRowCount() > 0) {
+             modelo.removeRow(0);
+            }
+            }
             try {
-             
-                //se crea el objeto Statement para realizar una consulta la bbdd con los datos a traves de la conexion creada anteriormente 
-                Statement sentencia = getConex().createStatement();
-                //se crea objeto ResulSet para almacenar el valor obtenido por la consulta SQL realizada por el obj Statement
-                ResultSet result = sentencia.executeQuery("SELECT * FROM archivos ");
-                //declaramos objetos para guardar los resultados obtenidos para la tabla
-                Object[] fila = new Object[3];
+                opcion = lista.getSelectedIndex();
+                
+                switch (opcion) {
 
-                //bucle while para mostrar datos mientras haya algun valor en el ResulSet si no los hay, no lo realizara
-                while (result.next()) {
+                    case 0:
+                        try {
+                            if(modelo.getRowCount()>1){
+                            
+                            }
+                            String[] columns = {"idLibro", "Autor", "titulo"};
+                            modelo.setColumnIdentifiers(columns);
+                            tabla.setModel(modelo);
+                            //se crea el objeto Statement para realizar una consulta la bbdd con los datos a traves de la conexion creada anteriormente 
+                             sentencia = getConex().createStatement();
+                            //se crea objeto ResulSet para almacenar el valor obtenido por la consulta SQL realizada por el obj Statement
+                            ResultSet result = sentencia.executeQuery("SELECT * FROM archivos ");
+                            //declaramos objetos para guardar los resultados obtenidos para la tabla
+                            Object[] fila = new Object[3];
 
-//                System.out.println(result.);
-                    //Creamos un Objeto con tantos parámetros como datos retorne cada fila 
-                    // de la consulta
-//                System.out.println(result.getMetaData().getTableName(0));
-                    fila[0] = result.getInt("idLibro"); //pasamos como parametro el nombre en String de los campos de la base de datos
-                    fila[1] = result.getString("Autor");
-                    fila[2] = result.getString("Titulo");
-                    System.out.println();
-                    jLabel2.setText(result.getMetaData().getTableName(WIDTH));
-                    tabla.setName(result.getMetaData().getTableName(WIDTH));
-                    modelo.addRow(fila);
+                            //bucle while para mostrar datos mientras haya algun valor en el ResulSet si no los hay, no lo realizara
+                            while (result.next()) {
 
+                                fila[0] = result.getInt("idLibro"); //pasamos como parametro el nombre en String de los campos de la base de datos
+                                fila[1] = result.getString("Autor");
+                                fila[2] = result.getString("Titulo");
+                               
+                                jLabel2.setText(result.getMetaData().getTableName(WIDTH));
+                                tabla.setName(result.getMetaData().getTableName(WIDTH));
+                                modelo.addRow(fila);
+                               
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }finally{
+                        
+                          if(sentencia !=null){
+                              try {
+                                  sentencia.close();
+                              } catch (SQLException e) {
+                                  e.printStackTrace();
+                              }
+                          
+                          }
+                        
+                        if(getConex()!=null){
+                            try {
+                                getConex().close();
+                            } catch (SQLException e) {
+                                e.printStackTrace();
+                                        
+                                
+                            }
+                        
+                        }
+                         
+                        }
+                        break;
+                        
+                    case 1:
+                          try {
+                            String[] columns = {"idDepartamentos", "Nombre", "Extension"};
+                            modelo.setColumnIdentifiers(columns);
+                            tabla.setModel(modelo);
+                            //se crea el objeto Statement para realizar una consulta la bbdd con los datos a traves de la conexion creada anteriormente 
+                             sentencia = getConex().createStatement();
+                            //se crea objeto ResulSet para almacenar el valor obtenido por la consulta SQL realizada por el obj Statement
+                            ResultSet result = sentencia.executeQuery("SELECT * FROM departamentos ");
+                            //declaramos objetos para guardar los resultados obtenidos para la tabla
+                            Object[] fila = new Object[4];
+
+                            //bucle while para mostrar datos mientras haya algun valor en el ResulSet si no los hay, no lo realizara
+                            while (result.next()) {
+
+                                fila[0] = result.getInt("idDepartamentos"); //pasamos como parametro el nombre en String de los campos de la base de datos
+                                fila[1] = result.getString("Nombre");
+                                fila[2] = result.getString("Extension");
+                                
+                                
+                                jLabel2.setText(result.getMetaData().getTableName(WIDTH));
+                                tabla.setName(result.getMetaData().getTableName(WIDTH));
+                                modelo.addRow(fila);
+                                tabla.updateUI();
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }finally{
+                        
+                          if(sentencia !=null){
+                              try {
+                                  sentencia.close();
+                              } catch (SQLException e) {
+                                  e.printStackTrace();
+                              }
+                          
+                          }
+                        
+                        if(getConex()!=null){
+                            try {
+                                getConex().close();
+                            } catch (SQLException e) {
+                                e.printStackTrace();
+                                        
+                                
+                            }
+                        
+                        }
+                         
+                        }
+                        break;
+                        
+                        
+                    
+                    case 2 :
+                         try {
+                           
+                            String[] columns = {"idRoles", "nivel"};
+                            modelo.setColumnIdentifiers(columns);
+                            tabla.setModel(modelo);
+                            //se crea el objeto Statement para realizar una consulta la bbdd con los datos a traves de la conexion creada anteriormente 
+                             sentencia = getConex().createStatement();
+                            //se crea objeto ResulSet para almacenar el valor obtenido por la consulta SQL realizada por el obj Statement
+                            ResultSet result = sentencia.executeQuery("SELECT * FROM roles ");
+                            //declaramos objetos para guardar los resultados obtenidos para la tabla
+                            Object[] fila = new Object[4];
+
+                            //bucle while para mostrar datos mientras haya algun valor en el ResulSet si no los hay, no lo realizara
+                            while (result.next()) {
+
+                                fila[0] = result.getInt("idRoles"); //pasamos como parametro el nombre en String de los campos de la base de datos
+                                fila[1] = result.getString("nivel");                              
+                               
+                                jLabel2.setText(result.getMetaData().getTableName(WIDTH));
+                                tabla.setName(result.getMetaData().getTableName(WIDTH));
+                                modelo.addRow(fila);
+                                tabla.updateUI();
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                        
+                        
+                    
+                    
+                    case 3:
+                         try {
+                            String[] columns = {"idUsuarios", "Nombre", "Password","IdRol"};
+                            modelo.setColumnIdentifiers(columns);
+                            tabla.setModel(modelo);
+                            //se crea el objeto Statement para realizar una consulta la bbdd con los datos a traves de la conexion creada anteriormente 
+                            sentencia = getConex().createStatement();
+                            //se crea objeto ResulSet para almacenar el valor obtenido por la consulta SQL realizada por el obj Statement
+                            ResultSet result = sentencia.executeQuery("SELECT * FROM usuarios ");
+                            //declaramos objetos para guardar los resultados obtenidos para la tabla
+                            Object[] fila = new Object[4];
+
+                            //bucle while para mostrar datos mientras haya algun valor en el ResulSet si no los hay, no lo realizara
+                            while (result.next()) {
+
+                                fila[0] = result.getInt("idUsuarios"); //pasamos como parametro el nombre en String de los campos de la base de datos
+                                fila[1] = result.getString("Nombre");
+                                fila[2] = result.getString("Password");
+                                fila[3] = result.getInt("IdRol");
+                                System.out.println();
+                                jLabel2.setText(result.getMetaData().getTableName(WIDTH));
+                                tabla.setName(result.getMetaData().getTableName(WIDTH));
+                                modelo.addRow(fila);
+
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                        
+                        
+                    
+                    
+                    
                 }
 
             } catch (Exception e) {
@@ -456,14 +630,21 @@ public class NewJFrame extends javax.swing.JFrame {
             }
             //para referescar la tabla despues de cada llamada al metodo , da problemas ya que desaparecen los demas componentes del panel
 //         tabla.updateUI();
-        }
+//        } 
         return modelo;
     }
-
+    
+    public static void Borrar(DefaultTableModel modelo){
+     while (modelo.getRowCount() > 0) {
+            modelo.removeRow(0);
+        }
+    
+    
+    }
     public static void Salir() {
         System.exit(0);
     }
-
+   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // Generated using JFormDesigner Evaluation license - Albert Av
