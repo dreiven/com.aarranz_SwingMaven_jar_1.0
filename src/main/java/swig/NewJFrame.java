@@ -25,7 +25,6 @@ import javax.swing.LayoutStyle;
 import javax.swing.table.DefaultTableModel;
 import org.jdesktop.beansbinding.*;
 import org.jdesktop.beansbinding.AutoBinding.UpdateStrategy;
-import static swig.loginTabla.getConex;
 
 /**
  *

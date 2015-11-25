@@ -18,9 +18,6 @@ import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.ImageIcon;
 import javax.swing.border.*;
-import javax.swing.event.*;
-import javax.swing.table.DefaultTableModel;
-import static swig.NewJFrame.getConex;
 
 /**
  *
@@ -43,21 +40,17 @@ public class loginTabla extends javax.swing.JFrame {
         try {
 
             getConex();
-           
-            if (comprobacionUsuario(textField1.getText(), passwordField1.getText()) ) {
+
+            if (comprobacionUsuario(textField1.getText(), passwordField1.getText())) {
                 NewJFrame ventana = new NewJFrame();
                 ventana.setVisible(true);
-                
-                
+
             }
         } catch (Exception ex) {
         }
 
     }
 
-   
-
-    
     public loginTabla() {
 
         initComponents();
@@ -278,43 +271,41 @@ public class loginTabla extends javax.swing.JFrame {
                 modeloList.addElement(result.getString(1));
 
                 list.setModel(modeloList);
-                
+
             }
-           
+
         } catch (Exception ex) {
-             Logger.getLogger(loginTabla.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(loginTabla.class.getName()).log(Level.SEVERE, null, ex);
         }
         return modeloList;
     }
+
     //////////////////////////////////////////////////////
     //////////////////////////////////////////////////////
     //////////////////////////////////////////////////////
-    public static Boolean comprobacionPermisos() throws SQLException{
-    
+
+    public static Boolean comprobacionPermisos() throws SQLException {
+
         getConex();
-        ResultSet result=null;
-        Statement sentencia =null;
+        ResultSet result = null;
+        Statement sentencia = null;
         try {
-            
-              //se crea el objeto Statement para realizar una consulta la bbdd con los datos a traves de la conexion creada anteriormente 
+
+            //se crea el objeto Statement para realizar una consulta la bbdd con los datos a traves de la conexion creada anteriormente 
             sentencia = getConex().createStatement();
             result = sentencia.executeQuery("SELECT * FROM usuarios AND roles");
-            while(result.next()){
-            
-//                System.out.println(result.get);
+            while (result.next()) {
+
                 System.out.println(result.getInt("IdRol"));
-                System.out.println(result.getInt("IdRol"));
-            return true;
+                return true;
             }
-            
-            
-            
+
         } catch (Exception e) {
         }
         System.out.println("Permiso denegado a la BBDD selecionada");
         return false;
     }
-    
+
     public static Boolean comprobacionUsuario(String user, String pass) throws SQLException {
 
         getConex();
@@ -336,53 +327,7 @@ public class loginTabla extends javax.swing.JFrame {
         System.out.println("No ha introducido datos correctos");
         return false;
     }
-public static DefaultTableModel CargaBaseDatosSeleccion(DefaultTableModel modelo, JTable tabla, JLabel jLabel2,JList list) {
-        //se declara condicion para que no repinte la tabla con los mismos datos una y otra vez
-        //,si el modelo contiene menos de 0 filas accede
-        String[] columns = {"idLibro", "Autor", "titulo"};
-        modelo.setColumnIdentifiers(columns);
-        tabla.setModel(modelo);
-        int opcion=0;
-        
-        opcion = list.getSelectedIndex();
-        
-      
-        /////////////////////REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE//////////////////////
-        if (modelo.getRowCount() <= 1) {
-            try {
-             
-                //se crea el objeto Statement para realizar una consulta la bbdd con los datos a traves de la conexion creada anteriormente 
-                Statement sentencia = getConex().createStatement();
-                //se crea objeto ResulSet para almacenar el valor obtenido por la consulta SQL realizada por el obj Statement
-                ResultSet result = sentencia.executeQuery("SELECT * FROM archivos ");
-                //declaramos objetos para guardar los resultados obtenidos para la tabla
-                Object[] fila = new Object[4];
 
-                //bucle while para mostrar datos mientras haya algun valor en el ResulSet si no los hay, no lo realizara
-                while (result.next()) {
-
-//                System.out.println(result.);
-                    //Creamos un Objeto con tantos parámetros como datos retorne cada fila 
-                    // de la consulta
-//                System.out.println(result.getMetaData().getTableName(0));
-                    fila[0] = result.getInt("idLibro"); //pasamos como parametro el nombre en String de los campos de la base de datos
-                    fila[1] = result.getString("Autor");
-                    fila[2] = result.getString("Titulo");
-                    System.out.println();
-                    jLabel2.setText(result.getMetaData().getTableName(WIDTH));
-                    tabla.setName(result.getMetaData().getTableName(WIDTH));
-                    modelo.addRow(fila);
-
-                }
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            //para referescar la tabla despues de cada llamada al metodo , da problemas ya que desaparecen los demas componentes del panel
-//         tabla.updateUI();
-        }
-        return modelo;
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // Generated using JFormDesigner Evaluation license - Albert Av
