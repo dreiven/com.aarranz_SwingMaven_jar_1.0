@@ -10,6 +10,7 @@ import java.awt.event.*;
 import static java.awt.image.ImageObserver.WIDTH;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -402,8 +403,8 @@ public class NewJFrame extends javax.swing.JFrame {
 
     public static JTable insertarDatos(JTable tabla, JList lista) {
         try {
-            Statement sentencia = getConex().createStatement();
-
+            
+            PreparedStatement sentencia=null;
             int filasAfectadas;
             int opcion;
             int value1 = 0;
@@ -415,45 +416,62 @@ public class NewJFrame extends javax.swing.JFrame {
             opcion = lista.getSelectedIndex();
             switch (opcion) {
                 case 0:
-
+                    String SQL="INSERT INTO  archivos VALUES (?,?,?)";
+                    sentencia = getConex().prepareStatement(SQL);
                     resValue1 = JOptionPane.showInputDialog("Inserte primer valor");
                     value1 = Integer.parseInt(resValue1);
                     value2 = JOptionPane.showInputDialog("Inserte segundo valor");
-                    value3 = JOptionPane.showInputDialog("Inserte tercer valor");
-                    filasAfectadas = sentencia.executeUpdate("INSERT INTO  archivos VALUES" + "('" + value1 + value2 + value3 + "')");
+                    value3 = JOptionPane.showInputDialog("Inserte tercer valor");                   
+                    sentencia.setInt(1, value1);
+                    sentencia.setString(2, value2);
+                    sentencia.setString(3, value3);
+            
+                    filasAfectadas=sentencia.executeUpdate();
                     System.out.println("Filas afectadas: " + filasAfectadas);
 
                     break;
 
                 case 1:
-
+                    String SQL2="INSERT INTO  departamentos VALUES (?,?,?)";
+                    sentencia = getConex().prepareStatement(SQL2);
                     resValue1 = JOptionPane.showInputDialog("Inserte primer valor");
                     value1 = Integer.parseInt(resValue1);
                     value2 = JOptionPane.showInputDialog("Inserte segundo valor");
-                    value3 = JOptionPane.showInputDialog("Inserte tercer valor");
-                    filasAfectadas = sentencia.executeUpdate("INSERT INTO  departamentos VALUES" + "('" + value1 + value2 + value3 + "')");
+                    value3 = JOptionPane.showInputDialog("Inserte tercer valor");                   
+                    sentencia.setInt(1, value1);
+                    sentencia.setString(2, value2);
+                    sentencia.setString(3, value3);        
+                    filasAfectadas=sentencia.executeUpdate();
                     System.out.println("Filas afectadas: " + filasAfectadas);
-
                     break;
                 case 2:
-
+                    String SQL3="INSERT INTO  roles VALUES (?,?)";
+                    sentencia = getConex().prepareStatement(SQL3);
                     resValue1 = JOptionPane.showInputDialog("Inserte primer valor");
                     value1 = Integer.parseInt(resValue1);
-                    value2 = JOptionPane.showInputDialog("Inserte segundo valor");
-                    filasAfectadas = sentencia.executeUpdate("INSERT INTO  roles VALUES" + "('" + value1 + value2 + "')");
-                    System.out.println("Filas afectadas: " + filasAfectadas);
+                    value2 = JOptionPane.showInputDialog("Inserte segundo valor");                                     
+                    sentencia.setInt(1, value1);
+                    sentencia.setString(2, value2);                           
+                    filasAfectadas=sentencia.executeUpdate();
+                    System.out.println("Filas afectadas: " + filasAfectadas);  
                     break;
 
                 case 3:
-
+                     String SQL4="INSERT INTO  usuarios VALUES (?,?,?,?)";
+                    sentencia = getConex().prepareStatement(SQL4);
                     resValue1 = JOptionPane.showInputDialog("Inserte primer valor");
                     value1 = Integer.parseInt(resValue1);
                     value2 = JOptionPane.showInputDialog("Inserte segundo valor");
                     value3 = JOptionPane.showInputDialog("Inserte tercer valor");
                     resValue2 = JOptionPane.showInputDialog("Inserte cuarto valor");
                     value4 = Integer.parseInt(resValue2);
-                    filasAfectadas = sentencia.executeUpdate("INSERT INTO  usuarios VALUES" + "('" + value1 + value2 + value3 + value4 + "')");
+                    sentencia.setInt(1, value1);
+                    sentencia.setString(2, value2);
+                    sentencia.setString(3, value3);
+                    sentencia.setInt(4, value4);
+                    filasAfectadas=sentencia.executeUpdate();
                     System.out.println("Filas afectadas: " + filasAfectadas);
+   
                     break;
 
             }
