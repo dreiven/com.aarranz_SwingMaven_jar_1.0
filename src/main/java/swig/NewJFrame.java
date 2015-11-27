@@ -325,6 +325,8 @@ public class NewJFrame extends javax.swing.JFrame {
         });
     }
 
+    //Metodo para conseguir una conexion con la BBDD
+
     public static Connection getConex() {
         //se declara el objeto COnnection con la referencia conexion a null 
         java.sql.Connection conexion = null;
@@ -341,46 +343,38 @@ public class NewJFrame extends javax.swing.JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        //se devuelve el objeto conexion cargado con los datos url,user,password 
         return conexion;
     }
 
-    public static ResultSet consultaTodos() {
-        ResultSet result = null;
-        Statement sentencia = null;
-        String res;
-        try {
-            //se crea el objeto Statement para realizar una consulta la bbdd con los datos a traves de la conexion creada anteriormente 
-            sentencia = getConex().createStatement();
-            //se crea objeto ResulSet para almacenar el valor obtenido por la consulta SQL realizada por el obj Statement
-            res = JOptionPane.showInputDialog("Que tabla desea abrir archivos o usuarios ");
-
-            result = sentencia.executeQuery("SELECT * FROM " + res);
-
-        } catch (Exception e) {
-        }
-        return result;
-    }
-
+    //Metodo para realizar una consulta inicial para conseguir la informacion de la BBdd y mostrar las tablas disponibles
     public static ResultSet consultaInicial(DefaultListModel modeloList, JList list, JTextField texto) {
+        //se declara objeto ResulSet pero sin inicializacion,donde se guardaran los datos de la consulta
         ResultSet result = null;
+        //se declara objeto Statementt pero sin inicializacion, donde guardaremos la consulta en SQL a realizar
         Statement sentencia = null;
-
+        //bloque try & catch
         try {
             //se crea el objeto Statement para realizar una consulta la bbdd con los datos a traves de la conexion creada anteriormente 
             sentencia = getConex().createStatement();
             //se crea objeto ResulSet para almacenar el valor obtenido por la consulta SQL realizada por el obj Statement
             result = sentencia.executeQuery("SHOW FULL TABLES FROM control");
+            //bloque while ,mientras result tenga datos entrar en el while
             while (result.next()) {
-                System.out.println(result.getString(WIDTH));
 
+                //se agrega la modelo de la lista ///////////////////////
                 modeloList.addElement(result.getString(1));
+                //se setea el texto al nombre de la BBDD
                 texto.setText("control");
+                //se setea el modelo de la lista a la lista
                 list.setModel(modeloList);
 
             }
         } catch (Exception ex) {
+
             Logger.getLogger(loginTabla.class.getName()).log(Level.SEVERE, null, ex);
         }
+        //se devuelve el objeto result con los datos de la consulta
         return result;
     }
 
@@ -397,14 +391,12 @@ public class NewJFrame extends javax.swing.JFrame {
         }
 
     }
-///////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////
 
+    // Metodo para la insercion de datos en la tabla seleccionada en una jlist 
     public static JTable insertarDatos(JTable tabla, JList lista) {
         try {
-            
-            PreparedStatement sentencia=null;
+            //se declara objeto PreparedStatement y se inicia a null
+            PreparedStatement sentencia = null;
             int filasAfectadas;
             int opcion;
             int value1 = 0;
@@ -416,48 +408,48 @@ public class NewJFrame extends javax.swing.JFrame {
             opcion = lista.getSelectedIndex();
             switch (opcion) {
                 case 0:
-                    String SQL="INSERT INTO  archivos VALUES (?,?,?)";
+                    String SQL = "INSERT INTO  archivos VALUES (?,?,?)";
                     sentencia = getConex().prepareStatement(SQL);
                     resValue1 = JOptionPane.showInputDialog("Inserte primer valor");
                     value1 = Integer.parseInt(resValue1);
                     value2 = JOptionPane.showInputDialog("Inserte segundo valor");
-                    value3 = JOptionPane.showInputDialog("Inserte tercer valor");                   
+                    value3 = JOptionPane.showInputDialog("Inserte tercer valor");
                     sentencia.setInt(1, value1);
                     sentencia.setString(2, value2);
                     sentencia.setString(3, value3);
-            
-                    filasAfectadas=sentencia.executeUpdate();
+
+                    filasAfectadas = sentencia.executeUpdate();
                     System.out.println("Filas afectadas: " + filasAfectadas);
 
                     break;
 
                 case 1:
-                    String SQL2="INSERT INTO  departamentos VALUES (?,?,?)";
+                    String SQL2 = "INSERT INTO  departamentos VALUES (?,?,?)";
                     sentencia = getConex().prepareStatement(SQL2);
                     resValue1 = JOptionPane.showInputDialog("Inserte primer valor");
                     value1 = Integer.parseInt(resValue1);
                     value2 = JOptionPane.showInputDialog("Inserte segundo valor");
-                    value3 = JOptionPane.showInputDialog("Inserte tercer valor");                   
+                    value3 = JOptionPane.showInputDialog("Inserte tercer valor");
                     sentencia.setInt(1, value1);
                     sentencia.setString(2, value2);
-                    sentencia.setString(3, value3);        
-                    filasAfectadas=sentencia.executeUpdate();
+                    sentencia.setString(3, value3);
+                    filasAfectadas = sentencia.executeUpdate();
                     System.out.println("Filas afectadas: " + filasAfectadas);
                     break;
                 case 2:
-                    String SQL3="INSERT INTO  roles VALUES (?,?)";
+                    String SQL3 = "INSERT INTO  roles VALUES (?,?)";
                     sentencia = getConex().prepareStatement(SQL3);
                     resValue1 = JOptionPane.showInputDialog("Inserte primer valor");
                     value1 = Integer.parseInt(resValue1);
-                    value2 = JOptionPane.showInputDialog("Inserte segundo valor");                                     
+                    value2 = JOptionPane.showInputDialog("Inserte segundo valor");
                     sentencia.setInt(1, value1);
-                    sentencia.setString(2, value2);                           
-                    filasAfectadas=sentencia.executeUpdate();
-                    System.out.println("Filas afectadas: " + filasAfectadas);  
+                    sentencia.setString(2, value2);
+                    filasAfectadas = sentencia.executeUpdate();
+                    System.out.println("Filas afectadas: " + filasAfectadas);
                     break;
 
                 case 3:
-                     String SQL4="INSERT INTO  usuarios VALUES (?,?,?,?)";
+                    String SQL4 = "INSERT INTO  usuarios VALUES (?,?,?,?)";
                     sentencia = getConex().prepareStatement(SQL4);
                     resValue1 = JOptionPane.showInputDialog("Inserte primer valor");
                     value1 = Integer.parseInt(resValue1);
@@ -469,9 +461,9 @@ public class NewJFrame extends javax.swing.JFrame {
                     sentencia.setString(2, value2);
                     sentencia.setString(3, value3);
                     sentencia.setInt(4, value4);
-                    filasAfectadas=sentencia.executeUpdate();
+                    filasAfectadas = sentencia.executeUpdate();
                     System.out.println("Filas afectadas: " + filasAfectadas);
-   
+
                     break;
 
             }
