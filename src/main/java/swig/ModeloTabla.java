@@ -21,14 +21,14 @@ public class ModeloTabla extends DefaultTableModel{
         
     	//Dimensiona la tabla para la presentación inicial
 //        this.setColumnIdentifiers(columnas);
-    	this.setColumnCount(1);
-    	this.setRowCount(1);
+    	this.setColumnCount(4);
+    	this.setRowCount(4);
     
        
     }
     public ModeloTabla(){
-    this.setColumnCount(1);
-    	this.setRowCount(1);
+    this.setColumnCount(4);
+    	this.setRowCount(4);
     
     }
     

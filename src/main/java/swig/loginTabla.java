@@ -37,16 +37,14 @@ public class loginTabla extends javax.swing.JFrame {
 
     private void accionLogin(ActionEvent e) {
 
-        try {
-
-            getConex();
-
+        try {           
             if (comprobacionUsuario(textField1.getText(), passwordField1.getText())) {
                 NewJFrame ventana = new NewJFrame();
                 ventana.setVisible(true);
 
             }
         } catch (Exception ex) {
+            Logger.getLogger(loginTabla.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -54,6 +52,8 @@ public class loginTabla extends javax.swing.JFrame {
     public loginTabla() {
 
         initComponents();
+        //se llama al metodo consultaInicial para proporcionar datos de inicio al login
+        //como el nombre de la bbd o las tablas que contiene
         consultaInicial(modeloList, list1);
 
     }
@@ -241,16 +241,18 @@ public class loginTabla extends javax.swing.JFrame {
         System.exit(0);
 
     }
-
+// metodo para abrir la conexion con la bbd se le pasa 3 parametros  usuario, URL de la bbdd y  password
     public static Connection getConex() {
         String user = "root";
         String pass = "";
         String url = "jdbc:mysql://localhost:3306/control";
+        //se crea objeto conection
         Connection conexion = null;
         try {
+            //se le pasan los parametros de entrada al objeto connection
             conexion = DriverManager.getConnection(url, user, pass);
-        } catch (Exception e) {
-
+        } catch (Exception ex) {
+        Logger.getLogger(loginTabla.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return conexion;
@@ -283,10 +285,8 @@ public class loginTabla extends javax.swing.JFrame {
     //////////////////////////////////////////////////////
     //////////////////////////////////////////////////////
     //////////////////////////////////////////////////////
-
-    public static Boolean comprobacionPermisos() throws SQLException {
-
-        getConex();
+    //IN PROGRESS
+    public static Boolean comprobacionPermisos() throws SQLException {     
         ResultSet result = null;
         Statement sentencia = null;
         try {
@@ -300,15 +300,14 @@ public class loginTabla extends javax.swing.JFrame {
                 return true;
             }
 
-        } catch (Exception e) {
+        } catch (Exception ex) {
+            Logger.getLogger(loginTabla.class.getName()).log(Level.SEVERE, null, ex);
         }
         System.out.println("Permiso denegado a la BBDD selecionada");
         return false;
     }
 
     public static Boolean comprobacionUsuario(String user, String pass) throws SQLException {
-
-        getConex();
         ResultSet result = null;
         Statement sentencia = null;
 
@@ -325,6 +324,7 @@ public class loginTabla extends javax.swing.JFrame {
             Logger.getLogger(loginTabla.class.getName()).log(Level.SEVERE, null, ex);
         }
         System.out.println("No ha introducido datos correctos");
+        JOptionPane.showConfirmDialog( null,"No ha introducido datos correctos");
         return false;
     }
 
