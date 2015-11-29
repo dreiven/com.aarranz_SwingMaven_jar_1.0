@@ -405,22 +405,32 @@ public class NewJFrame extends javax.swing.JFrame {
             String resValue2 = "";
             String value2;
             String value3;
+            //se asocia el index en la lista selecionado con la variable int opcion
             opcion = lista.getSelectedIndex();
             switch (opcion) {
                 case 0:
+                    //se declara la sentencia de SQL como string con los valores en ?
                     String SQL = "INSERT INTO  archivos VALUES (?,?,?)";
+                    //cargamos en la variable sentencia el prepared statement con la String SQL como parametro
                     sentencia = getConex().prepareStatement(SQL);
+                    //solicitamos un primer valor por pantalla
                     resValue1 = JOptionPane.showInputDialog("Inserte primer valor");
+                    //pasamos el valor String recibido a int y lo guardamos en la var int value1
+                    //esto debe hacerse ya que el primer dato que  recibe la bbdd es int y al solicitarlo por pantalla se recibira un String
                     value1 = Integer.parseInt(resValue1);
+                    //solicitamos por pantalla el segundo parametro (en este caso no es necesario el parseo ya que la bbdd solicita un String)
                     value2 = JOptionPane.showInputDialog("Inserte segundo valor");
+                    //solicitamos tercer dato por pantalla 
                     value3 = JOptionPane.showInputDialog("Inserte tercer valor");
-                    sentencia.setInt(1, value1);
-                    sentencia.setString(2, value2);
-                    sentencia.setString(3, value3);
-
+                    //con el prepared Statement sentencia seteamos los datos que le vamos a pasar a la bbdd ,el primer parametro le da la posicion en la tabla y el segundo los datos a setear ,
+                    //los tipos de datos deben de coincidir
+                    sentencia.setInt(1, value1);//id
+                    sentencia.setString(2, value2);//autor
+                    sentencia.setString(3, value3);//titulo
+                    //ejecutamos la sentencia con el metodo executeUpdate y lo guardamos en la variable filasAfectadas para que informe de cuantas filas se han modificado
                     filasAfectadas = sentencia.executeUpdate();
+                    //se muestra por pantalla un mensaje indicando la cantidad de filas modificadas
                     System.out.println("Filas afectadas: " + filasAfectadas);
-
                     break;
 
                 case 1:
