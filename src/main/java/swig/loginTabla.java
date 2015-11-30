@@ -301,20 +301,21 @@ public class loginTabla extends javax.swing.JFrame {
                 
                     case 1:
                         respuesta = true;
-                        break;
+                        break; 
                         
-                
-                
+                    case 2 :
+                        respuesta = true;
+                        
+                    case 3 :
+                         respuesta = true;
+                    
+                    case 4 :
+                        respuesta = true;
+                        
+                        
                 }
                 
                 
-                if (result.getInt(4)== 1){
-                
-                   return true;
-                }if(result.getInt(4)== 2){
-                
-                   return true;
-                }
                 System.out.println(result.getInt("IdRol"));
                 return respuesta;
             }
