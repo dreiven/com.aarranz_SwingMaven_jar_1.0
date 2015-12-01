@@ -307,7 +307,7 @@ public class loginTabla extends javax.swing.JFrame {
                         respuesta = true;
                         
                     case 3 :
-                         respuesta = true;
+                        respuesta = true;
                     
                     case 4 :
                         respuesta = true;
