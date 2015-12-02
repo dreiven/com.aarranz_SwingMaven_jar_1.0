@@ -295,7 +295,7 @@ public class loginTabla extends javax.swing.JFrame {
             //se crea el objeto Statement para realizar una consulta la bbdd con los datos a traves de la conexion creada anteriormente 
             sentencia = getConex().createStatement();
             result = sentencia.executeQuery("SELECT * FROM usuarios ");
-            while (result.next()) {
+            while (result.next() result.getInt(null)) {
                 
                 switch(result.getInt(4)){
                 

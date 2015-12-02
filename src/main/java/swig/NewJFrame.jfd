@@ -17,8 +17,8 @@ new FormModel {
 				} )
 			} )
 			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-				"$horizontalGroup": "par l {seq l {space ::119:x, comp jButton3:::p:117:p, space s:::p, comp jButton2:::p::p}, seq l {space :p:33:p, par l {comp jButton1:::p::p, comp jButton4:::::x}, space :0:157:x}}"
-				"$verticalGroup": "par l {seq {space :p:21:p, comp jButton1:::p::p, space s:::p, comp jButton4:::p:23:p, space ::64:x, par b {comp jButton2::b:p::p, comp jButton3::b:p::p}}}"
+				"$horizontalGroup": "par l {seq l {space :::x, comp jButton3:::p:117:p, space s:::p, comp jButton2:::p::p}, seq l {space :p:33:p, par l {comp jButton1:::p::p, comp jButton4:::::x}, space :p:42:p, comp button1:::p:78:p, space :p:37:p}}"
+				"$verticalGroup": "par l {seq {space :p:21:p, par b {comp jButton1::b:p::p, comp button1::b:p::p}, space :p:30:p, comp jButton4:::p:23:p, space ::52:x, par b {comp jButton2::b:p::p, comp jButton3::b:p::p}}}"
 			} ) {
 				name: "jPanel1"
 				add( new FormComponent( "javax.swing.JButton" ) {
@@ -40,6 +40,11 @@ new FormModel {
 					name: "jButton4"
 					"text": "Insertar Datos"
 					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "accionInsertar", true ) )
+				} )
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "button1"
+					"text": "Guardar"
+					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "accionGuardar", true ) )
 				} )
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {

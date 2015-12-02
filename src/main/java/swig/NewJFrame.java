@@ -40,6 +40,10 @@ public class NewJFrame extends javax.swing.JFrame {
     DefaultTableModel modelo = new DefaultTableModel();
     private DefaultListModel modeloLista = new DefaultListModel();
 
+    private void accionGuardar(ActionEvent e) {
+        guardarArchivo();
+    }
+
     public NewJFrame() throws SQLException {
         initComponents();
         getConex();
@@ -63,6 +67,7 @@ public class NewJFrame extends javax.swing.JFrame {
         jButton3 = new JButton();
         jButton2 = new JButton();
         jButton4 = new JButton();
+        button1 = new JButton();
         jLabel1 = new JLabel();
         jLabel2 = new JLabel();
         jLabel4 = new JLabel();
@@ -128,12 +133,21 @@ public class NewJFrame extends javax.swing.JFrame {
                 }
             });
 
+            //---- button1 ----
+            button1.setText("Guardar");
+            button1.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    accionGuardar(e);
+                }
+            });
+
             GroupLayout jPanel1Layout = new GroupLayout(jPanel1);
             jPanel1.setLayout(jPanel1Layout);
             jPanel1Layout.setHorizontalGroup(
                 jPanel1Layout.createParallelGroup()
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(119, Short.MAX_VALUE)
+                        .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton3, GroupLayout.PREFERRED_SIZE, 117, GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jButton2))
@@ -142,16 +156,20 @@ public class NewJFrame extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup()
                             .addComponent(jButton1)
                             .addComponent(jButton4, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 157, Short.MAX_VALUE))
+                        .addGap(42, 42, 42)
+                        .addComponent(button1, GroupLayout.PREFERRED_SIZE, 78, GroupLayout.PREFERRED_SIZE)
+                        .addGap(37, 37, 37))
             );
             jPanel1Layout.setVerticalGroup(
                 jPanel1Layout.createParallelGroup()
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(21, 21, 21)
-                        .addComponent(jButton1)
-                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton1)
+                            .addComponent(button1))
+                        .addGap(30, 30, 30)
                         .addComponent(jButton4, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton2)
                             .addComponent(jButton3)))
@@ -384,14 +402,22 @@ public class NewJFrame extends javax.swing.JFrame {
             /* ejecuta la sentencia de borrado */
             int filasAfectadas;
 
-            filasAfectadas = sentencia.executeUpdate("DELETE FROM control.archivos WHERE 1=1");
+            filasAfectadas = sentencia.executeUpdate("DELETE FROM archivos WHERE 1=1");
             System.out.println("Filas afectadas: " + filasAfectadas);
         } catch (Exception e) {
             Logger.getLogger(e.getMessage());
         }
 
     }
-
+  public static void guardarArchivo(){
+  
+  
+  
+  
+  
+  
+  
+  }
     // Metodo para la insercion de datos en la tabla seleccionada en una jlist 
     public static JTable insertarDatos(JTable tabla, JList lista) {
         try {
@@ -409,7 +435,7 @@ public class NewJFrame extends javax.swing.JFrame {
             opcion = lista.getSelectedIndex();
             switch (opcion) {
                 case 0:
-                    //se declara la sentencia de SQL como string con los valores en ?
+                    //se declara la sentencia de SQL como string con los valores en ? (en este caso todos los datos en la tabla archivos)
                     String SQL = "INSERT INTO  archivos VALUES (?,?,?)";
                     //cargamos en la variable sentencia el prepared statement con la String SQL como parametro
                     sentencia = getConex().prepareStatement(SQL);
@@ -434,7 +460,9 @@ public class NewJFrame extends javax.swing.JFrame {
                     break;
 
                 case 1:
+                    //se declara la sentencia de SQL como string con los valores en ? (en este caso todos los datos en la tabla departamentos)
                     String SQL2 = "INSERT INTO  departamentos VALUES (?,?,?)";
+                    //cargamos en la variable sentencia el prepared statement con la String SQL como parametro
                     sentencia = getConex().prepareStatement(SQL2);
                     resValue1 = JOptionPane.showInputDialog("Inserte primer valor");
                     value1 = Integer.parseInt(resValue1);
@@ -447,6 +475,7 @@ public class NewJFrame extends javax.swing.JFrame {
                     System.out.println("Filas afectadas: " + filasAfectadas);
                     break;
                 case 2:
+                     //se declara la sentencia de SQL como string con los valores en ? (en este caso todos los datos en la tabla roles)
                     String SQL3 = "INSERT INTO  roles VALUES (?,?)";
                     sentencia = getConex().prepareStatement(SQL3);
                     resValue1 = JOptionPane.showInputDialog("Inserte primer valor");
@@ -459,6 +488,7 @@ public class NewJFrame extends javax.swing.JFrame {
                     break;
 
                 case 3:
+                     //se declara la sentencia de SQL como string con los valores en ? (en este caso todos los datos en la tabla usuarios)
                     String SQL4 = "INSERT INTO  usuarios VALUES (?,?,?,?)";
                     sentencia = getConex().prepareStatement(SQL4);
                     resValue1 = JOptionPane.showInputDialog("Inserte primer valor");
@@ -698,6 +728,7 @@ public class NewJFrame extends javax.swing.JFrame {
     private JButton jButton3;
     private JButton jButton2;
     private JButton jButton4;
+    private JButton button1;
     private JLabel jLabel1;
     private JLabel jLabel2;
     private JLabel jLabel4;
