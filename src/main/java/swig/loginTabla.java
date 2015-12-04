@@ -286,7 +286,17 @@ public class loginTabla extends javax.swing.JFrame {
     //////////////////////////////////////////////////////
     //////////////////////////////////////////////////////
     //IN PROGRESS
-    public static Boolean comprobacionPermisos(JList lista) throws SQLException {     
+    
+    public static void Mostrar(){
+    
+    
+    
+    
+    
+    }
+    
+    
+    public static int comprobacionPermisos(JList lista) throws SQLException {     
         ResultSet result = null;
         Statement sentencia = null;
         Boolean respuesta=false;
@@ -301,14 +311,14 @@ public class loginTabla extends javax.swing.JFrame {
                 
                 
                 System.out.println(result.getInt("IdRol"));
-                return respuesta;
+                return 1;
             }
 
         } catch (Exception ex) {
             Logger.getLogger(loginTabla.class.getName()).log(Level.SEVERE, null, ex);
         }
         System.out.println("Permiso denegado a la BBDD selecionada");
-        return respuesta;
+        return 0;
     }
 
     public static Boolean comprobacionUsuario(String user, String pass) throws SQLException {
