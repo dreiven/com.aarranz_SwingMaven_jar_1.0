@@ -39,9 +39,10 @@ public class loginTabla extends javax.swing.JFrame {
 
         try {           
             if (comprobacionUsuario(textField1.getText(), passwordField1.getText())) {
+                
                 NewJFrame ventana = new NewJFrame();
                 ventana.setVisible(true);
-
+                ventana.label2.setText(textField1.getText());
             }
         } catch (Exception ex) {
             Logger.getLogger(loginTabla.class.getName()).log(Level.SEVERE, null, ex);
@@ -55,7 +56,7 @@ public class loginTabla extends javax.swing.JFrame {
         //se llama al metodo consultaInicial para proporcionar datos de inicio al login
         //como el nombre de la bbd o las tablas que contiene
         consultaInicial(modeloList, list1);
-
+       
     }
 
     /**
@@ -65,7 +66,7 @@ public class loginTabla extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    // Generated using JFormDesigner Evaluation license - Albert Av
+    // Generated using JFormDesigner Evaluation license - juab tobin
     private void initComponents() {
         jPanel1 = new JPanel();
         textField1 = new JTextField();
@@ -75,7 +76,7 @@ public class loginTabla extends javax.swing.JFrame {
         label4 = new JLabel();
         label3 = new JLabel();
         button2 = new JButton();
-        label2 = new JLabel();
+        labl2 = new JLabel();
         scrollPane1 = new JScrollPane();
         list1 = new JList();
         jLabel1 = new JLabel();
@@ -142,12 +143,12 @@ public class loginTabla extends javax.swing.JFrame {
             jPanel1.add(button2);
             button2.setBounds(190, 405, 75, 25);
 
-            //---- label2 ----
-            label2.setText("Password");
-            label2.setHorizontalAlignment(SwingConstants.CENTER);
-            label2.setFont(label2.getFont().deriveFont(label2.getFont().getSize() + 2f));
-            jPanel1.add(label2);
-            label2.setBounds(10, 310, 75, 35);
+            //---- labl2 ----
+            labl2.setText("Password");
+            labl2.setHorizontalAlignment(SwingConstants.CENTER);
+            labl2.setFont(labl2.getFont().deriveFont(labl2.getFont().getSize() + 2f));
+            jPanel1.add(labl2);
+            labl2.setBounds(10, 310, 75, 35);
 
             //======== scrollPane1 ========
             {
@@ -297,20 +298,20 @@ public class loginTabla extends javax.swing.JFrame {
     
     
     public static int comprobacionPermisos(JList lista) throws SQLException {     
-        ResultSet result = null;
-        Statement sentencia = null;
+        ResultSet result2 = null;
+        Statement sentencia2 = null;
         Boolean respuesta=false;
         try {
 
             //se crea el objeto Statement para realizar una consulta la bbdd con los datos a traves de la conexion creada anteriormente 
-            sentencia = getConex().createStatement();
-            result = sentencia.executeQuery("SELECT * FROM usuarios ");
-            while (result.next() ) {
+            sentencia2 = getConex().createStatement();
+            result2 = sentencia2.executeQuery("SELECT * FROM usuarios ");
+            while (result2.next() ) {
                 
                
                 
                 
-                System.out.println(result.getInt("IdRol"));
+                System.out.println(result2.getInt("IdRol"));
                 return 1;
             }
 
@@ -344,7 +345,7 @@ public class loginTabla extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    // Generated using JFormDesigner Evaluation license - Albert Av
+    // Generated using JFormDesigner Evaluation license - juab tobin
     private JPanel jPanel1;
     private JTextField textField1;
     private JPasswordField passwordField1;
@@ -353,7 +354,7 @@ public class loginTabla extends javax.swing.JFrame {
     private JLabel label4;
     private JLabel label3;
     private JButton button2;
-    private JLabel label2;
+    private JLabel labl2;
     private JScrollPane scrollPane1;
     private JList list1;
     private JLabel jLabel1;

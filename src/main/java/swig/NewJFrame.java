@@ -58,7 +58,7 @@ public class NewJFrame extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    // Generated using JFormDesigner Evaluation license - Albert Av
+    // Generated using JFormDesigner Evaluation license - juab tobin
     private void initComponents() {
         jScrollPane1 = new JScrollPane();
         jTable1 = new JTable();
@@ -75,6 +75,8 @@ public class NewJFrame extends javax.swing.JFrame {
         jScrollPane2 = new JScrollPane();
         jList1 = new JList<>();
         label1 = new JLabel();
+        label2 = new JLabel();
+        label3 = new JLabel();
 
         //======== this ========
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -169,7 +171,7 @@ public class NewJFrame extends javax.swing.JFrame {
                             .addComponent(button1))
                         .addGap(30, 30, 30)
                         .addComponent(jButton4, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton2)
                             .addComponent(jButton3)))
@@ -218,6 +220,15 @@ public class NewJFrame extends javax.swing.JFrame {
         //---- label1 ----
         label1.setIcon(new ImageIcon("C:\\Users\\PC\\Documents\\NetBeansProjects\\com.aarranz_SwingMaven_jar_1.0\\src\\main\\java\\swig\\img\\bbddpk.png"));
 
+        //---- label2 ----
+        label2.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 12));
+
+        //---- label3 ----
+        label3.setText("Usuario :");
+        label3.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+        label3.setFont(new Font("Tahoma", Font.BOLD, 12));
+        label3.setHorizontalAlignment(SwingConstants.CENTER);
+
         GroupLayout contentPaneLayout = new GroupLayout(contentPane);
         contentPane.setLayout(contentPaneLayout);
         contentPaneLayout.setHorizontalGroup(
@@ -225,13 +236,9 @@ public class NewJFrame extends javax.swing.JFrame {
                 .addGroup(contentPaneLayout.createSequentialGroup()
                     .addContainerGap()
                     .addGroup(contentPaneLayout.createParallelGroup()
-                        .addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
                         .addGroup(contentPaneLayout.createSequentialGroup()
                             .addGroup(contentPaneLayout.createParallelGroup()
-                                .addGroup(contentPaneLayout.createSequentialGroup()
-                                    .addComponent(jLabel1, GroupLayout.PREFERRED_SIZE, 105, GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jLabel2, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE))
                                 .addGroup(contentPaneLayout.createSequentialGroup()
                                     .addComponent(label1)
                                     .addGap(18, 18, 18)
@@ -241,8 +248,20 @@ public class NewJFrame extends javax.swing.JFrame {
                                 .addGroup(contentPaneLayout.createSequentialGroup()
                                     .addComponent(jScrollPane2, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jPanel1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-                            .addGap(0, 1, Short.MAX_VALUE)))
+                                    .addComponent(jPanel1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                .addGroup(contentPaneLayout.createSequentialGroup()
+                                    .addGap(9, 9, 9)
+                                    .addGroup(contentPaneLayout.createParallelGroup()
+                                        .addGroup(contentPaneLayout.createSequentialGroup()
+                                            .addComponent(jLabel1, GroupLayout.PREFERRED_SIZE, 105, GroupLayout.PREFERRED_SIZE)
+                                            .addGap(0, 0, Short.MAX_VALUE))
+                                        .addGroup(contentPaneLayout.createSequentialGroup()
+                                            .addComponent(label3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(label2, GroupLayout.PREFERRED_SIZE, 108, GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(jLabel2, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)))))
+                            .addGap(1, 1, 1)))
                     .addContainerGap())
         );
         contentPaneLayout.setVerticalGroup(
@@ -257,19 +276,20 @@ public class NewJFrame extends javax.swing.JFrame {
                         .addComponent(label1, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE))
                     .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 175, GroupLayout.PREFERRED_SIZE)
+                    .addGap(18, 18, 18)
                     .addGroup(contentPaneLayout.createParallelGroup()
                         .addGroup(contentPaneLayout.createSequentialGroup()
-                            .addGap(34, 34, 34)
-                            .addComponent(jLabel1, GroupLayout.PREFERRED_SIZE, 66, GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED))
-                        .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
-                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jLabel2, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
-                            .addGap(29, 29, 29)))
+                            .addGroup(contentPaneLayout.createParallelGroup()
+                                .addComponent(label2, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(label3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGap(18, 18, 18)
+                            .addComponent(jLabel1, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel2, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
+                    .addGap(22, 22, 22)
                     .addGroup(contentPaneLayout.createParallelGroup()
                         .addGroup(contentPaneLayout.createSequentialGroup()
                             .addComponent(jScrollPane2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                            .addGap(0, 42, Short.MAX_VALUE))
+                            .addGap(0, 29, Short.MAX_VALUE))
                         .addComponent(jPanel1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addContainerGap())
         );
@@ -371,23 +391,39 @@ public class NewJFrame extends javax.swing.JFrame {
         ResultSet result = null;
         //se declara objeto Statementt pero sin inicializacion, donde guardaremos la consulta en SQL a realizar
         Statement sentencia = null;
+        
+        Statement sentencia2 = null;
+        ResultSet result2 = null;
+        
+        
+        
+        
+        
+        
+        
         //bloque try & catch
         try {
             //se crea el objeto Statement para realizar una consulta la bbdd con los datos a traves de la conexion creada anteriormente 
             sentencia = getConex().createStatement();
+            sentencia2 = getConex().createStatement();
             //se crea objeto ResulSet para almacenar el valor obtenido por la consulta SQL realizada por el obj Statement
             result = sentencia.executeQuery("SHOW FULL TABLES FROM control");
+            
+            result2 = sentencia2.executeQuery("SELECT * FROM usuarios ");
             //bloque while ,mientras result tenga datos entrar en el while
-            while (result.next()) {
-
+            while (result.next() && result2.next()) {
                 //se agrega la modelo de la lista ///////////////////////
                 modeloList.addElement(result.getString(1));
                 //se setea el texto al nombre de la BBDD
                 texto.setText("control");
                 //se setea el modelo de la lista a la lista
-                list.setModel(modeloList);
-
+                list.setModel(modeloList);           
             }
+            
+            
+            
+            
+            modeloList.removeElementAt(1);
         } catch (Exception ex) {
 
             Logger.getLogger(loginTabla.class.getName()).log(Level.SEVERE, null, ex);
@@ -720,7 +756,7 @@ public class NewJFrame extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    // Generated using JFormDesigner Evaluation license - Albert Av
+    // Generated using JFormDesigner Evaluation license - juab tobin
     private JScrollPane jScrollPane1;
     private JTable jTable1;
     private JPanel jPanel1;
@@ -736,6 +772,8 @@ public class NewJFrame extends javax.swing.JFrame {
     private JScrollPane jScrollPane2;
     private JList<String> jList1;
     private JLabel label1;
+    public static JLabel label2;
+    private JLabel label3;
     private BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }

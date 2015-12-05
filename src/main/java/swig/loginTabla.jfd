@@ -76,7 +76,7 @@ new FormModel {
 					"height": 25
 				} )
 				add( new FormComponent( "javax.swing.JLabel" ) {
-					name: "label2"
+					name: "labl2"
 					"text": "Password"
 					"horizontalAlignment": 0
 					"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 2, false )
