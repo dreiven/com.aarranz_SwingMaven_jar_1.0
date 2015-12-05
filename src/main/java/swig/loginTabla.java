@@ -38,7 +38,7 @@ public class loginTabla extends javax.swing.JFrame {
     private void accionLogin(ActionEvent e) {
 
         try {           
-            if (comprobacionUsuario(textField1.getText(), passwordField1.getText())) {
+            if ((comprobacionUsuario(textField1.getText(), passwordField1.getText()) && (comprobacionPermisos(list1,textField1.getText())))) {
                 
                 NewJFrame ventana = new NewJFrame();
                 ventana.setVisible(true);
@@ -297,7 +297,7 @@ public class loginTabla extends javax.swing.JFrame {
     }
     
     
-    public static int comprobacionPermisos(JList lista) throws SQLException {     
+    public static Boolean comprobacionPermisos(JList lista,String usuario) throws SQLException {     
         ResultSet result2 = null;
         Statement sentencia2 = null;
         Boolean respuesta=false;
@@ -305,21 +305,18 @@ public class loginTabla extends javax.swing.JFrame {
 
             //se crea el objeto Statement para realizar una consulta la bbdd con los datos a traves de la conexion creada anteriormente 
             sentencia2 = getConex().createStatement();
-            result2 = sentencia2.executeQuery("SELECT * FROM usuarios ");
+            result2 = sentencia2.executeQuery("SELECT '"+ usuario +"'FROM usuarios ");
             while (result2.next() ) {
-                
+
                
-                
-                
-                System.out.println(result2.getInt("IdRol"));
-                return 1;
+                return true;
             }
 
         } catch (Exception ex) {
             Logger.getLogger(loginTabla.class.getName()).log(Level.SEVERE, null, ex);
         }
         System.out.println("Permiso denegado a la BBDD selecionada");
-        return 0;
+        return false;
     }
 
     public static Boolean comprobacionUsuario(String user, String pass) throws SQLException {

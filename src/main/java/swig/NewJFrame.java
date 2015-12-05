@@ -47,7 +47,7 @@ public class NewJFrame extends javax.swing.JFrame {
     public NewJFrame() throws SQLException {
         initComponents();
         getConex();
-        result = consultaInicial(modeloLista, jList1, jTextField1);
+        consultaInicial(modeloLista, jList1, jTextField1);
 
     }
 
@@ -238,6 +238,19 @@ public class NewJFrame extends javax.swing.JFrame {
                     .addGroup(contentPaneLayout.createParallelGroup()
                         .addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
                         .addGroup(contentPaneLayout.createSequentialGroup()
+                            .addGap(9, 9, 9)
+                            .addGroup(contentPaneLayout.createParallelGroup()
+                                .addGroup(contentPaneLayout.createSequentialGroup()
+                                    .addComponent(jLabel1, GroupLayout.PREFERRED_SIZE, 105, GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jLabel2, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)
+                                    .addGap(0, 0, Short.MAX_VALUE))
+                                .addGroup(contentPaneLayout.createSequentialGroup()
+                                    .addComponent(label3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(label2, GroupLayout.PREFERRED_SIZE, 139, GroupLayout.PREFERRED_SIZE)
+                                    .addGap(136, 136, 136))))
+                        .addGroup(contentPaneLayout.createSequentialGroup()
                             .addGroup(contentPaneLayout.createParallelGroup()
                                 .addGroup(contentPaneLayout.createSequentialGroup()
                                     .addComponent(label1)
@@ -248,19 +261,7 @@ public class NewJFrame extends javax.swing.JFrame {
                                 .addGroup(contentPaneLayout.createSequentialGroup()
                                     .addComponent(jScrollPane2, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jPanel1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                                .addGroup(contentPaneLayout.createSequentialGroup()
-                                    .addGap(9, 9, 9)
-                                    .addGroup(contentPaneLayout.createParallelGroup()
-                                        .addGroup(contentPaneLayout.createSequentialGroup()
-                                            .addComponent(jLabel1, GroupLayout.PREFERRED_SIZE, 105, GroupLayout.PREFERRED_SIZE)
-                                            .addGap(0, 0, Short.MAX_VALUE))
-                                        .addGroup(contentPaneLayout.createSequentialGroup()
-                                            .addComponent(label3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(label2, GroupLayout.PREFERRED_SIZE, 108, GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(jLabel2, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)))))
+                                    .addComponent(jPanel1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
                             .addGap(1, 1, 1)))
                     .addContainerGap())
         );
@@ -276,14 +277,13 @@ public class NewJFrame extends javax.swing.JFrame {
                         .addComponent(label1, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE))
                     .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 175, GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addGroup(contentPaneLayout.createParallelGroup()
+                        .addComponent(label3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(label2, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
                     .addGap(18, 18, 18)
                     .addGroup(contentPaneLayout.createParallelGroup()
-                        .addGroup(contentPaneLayout.createSequentialGroup()
-                            .addGroup(contentPaneLayout.createParallelGroup()
-                                .addComponent(label2, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
-                                .addComponent(label3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGap(18, 18, 18)
-                            .addComponent(jLabel1, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel1, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel2, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
                     .addGap(22, 22, 22)
                     .addGroup(contentPaneLayout.createParallelGroup()
@@ -386,7 +386,7 @@ public class NewJFrame extends javax.swing.JFrame {
     }
 
     //Metodo para realizar una consulta inicial para conseguir la informacion de la BBdd y mostrar las tablas disponibles
-    public static ResultSet consultaInicial(DefaultListModel modeloList, JList list, JTextField texto) {
+    public static void consultaInicial(DefaultListModel modeloList, JList list, JTextField texto) {
         //se declara objeto ResulSet pero sin inicializacion,donde se guardaran los datos de la consulta
         ResultSet result = null;
         //se declara objeto Statementt pero sin inicializacion, donde guardaremos la consulta en SQL a realizar
@@ -408,28 +408,57 @@ public class NewJFrame extends javax.swing.JFrame {
             sentencia2 = getConex().createStatement();
             //se crea objeto ResulSet para almacenar el valor obtenido por la consulta SQL realizada por el obj Statement
             result = sentencia.executeQuery("SHOW FULL TABLES FROM control");
-            
             result2 = sentencia2.executeQuery("SELECT * FROM usuarios ");
+            
             //bloque while ,mientras result tenga datos entrar en el while
             while (result.next() && result2.next()) {
-                //se agrega la modelo de la lista ///////////////////////
+               
+                
+                System.out.println(result2.getInt("IdRol"));
+                if(result2.getInt("IdRol")== 1){
+                       
+                 //se agrega la modelo de la lista ///////////////////////
                 modeloList.addElement(result.getString(1));
                 //se setea el texto al nombre de la BBDD
                 texto.setText("control");
                 //se setea el modelo de la lista a la lista
-                list.setModel(modeloList);           
+                list.setModel(modeloList);
+                
+                }if(result2.getInt("IdRol")==2){
+                  //se agrega la modelo de la lista ///////////////////////
+                modeloList.addElement(result.getString(1));
+                //se setea el texto al nombre de la BBDD
+                texto.setText("control");
+                //se setea el modelo de la lista a la lista
+                list.setModel(modeloList);
+                 modeloList.removeElementAt(1);
+                
+                }else{
+                    //se agrega la modelo de la lista ///////////////////////
+                modeloList.addElement(result.getString(1));
+                //se setea el texto al nombre de la BBDD
+                texto.setText("control");
+                //se setea el modelo de la lista a la lista
+                list.setModel(modeloList);
+                 modeloList.removeElementAt(2);
+                 modeloList.removeElementAt(3);
+                
+                
+                
+                }
+                           
             }
             
             
             
             
-            modeloList.removeElementAt(1);
+//            modeloList.removeElementAt(1);
         } catch (Exception ex) {
 
             Logger.getLogger(loginTabla.class.getName()).log(Level.SEVERE, null, ex);
         }
         //se devuelve el objeto result con los datos de la consulta
-        return result;
+        
     }
 
     public static void borrarTabla() {
