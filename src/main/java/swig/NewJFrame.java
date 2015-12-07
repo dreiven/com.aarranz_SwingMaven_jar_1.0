@@ -364,7 +364,6 @@ public class NewJFrame extends javax.swing.JFrame {
     }
 
     //Metodo para conseguir una conexion con la BBDD
-
     public static Connection getConex() {
         //se declara el objeto COnnection con la referencia conexion a null 
         java.sql.Connection conexion = null;
@@ -391,16 +390,12 @@ public class NewJFrame extends javax.swing.JFrame {
         ResultSet result = null;
         //se declara objeto Statementt pero sin inicializacion, donde guardaremos la consulta en SQL a realizar
         Statement sentencia = null;
-        
+
         Statement sentencia2 = null;
         ResultSet result2 = null;
-        
-        
-        
-        
-        
-        
-        
+//        String usuario = label2.getText();
+        String usuario = "Israel";
+
         //bloque try & catch
         try {
             //se crea el objeto Statement para realizar una consulta la bbdd con los datos a traves de la conexion creada anteriormente 
@@ -408,57 +403,43 @@ public class NewJFrame extends javax.swing.JFrame {
             sentencia2 = getConex().createStatement();
             //se crea objeto ResulSet para almacenar el valor obtenido por la consulta SQL realizada por el obj Statement
             result = sentencia.executeQuery("SHOW FULL TABLES FROM control");
-            result2 = sentencia2.executeQuery("SELECT * FROM usuarios ");
-            
+            result2 = sentencia2.executeQuery("SELECT * FROM usuarios WHERE Nombre ='" + usuario + "'");
+
             //bloque while ,mientras result tenga datos entrar en el while
-            while (result.next() && result2.next()) {
-               
-                
-                System.out.println(result2.getInt("IdRol"));
-                if(result2.getInt("IdRol")== 1){
-                       
-                 //se agrega la modelo de la lista ///////////////////////
+            while (result.next()) {
+
+                //se agrega la modelo de la lista ///////////////////////
                 modeloList.addElement(result.getString(1));
                 //se setea el texto al nombre de la BBDD
                 texto.setText("control");
                 //se setea el modelo de la lista a la lista
                 list.setModel(modeloList);
-                
-                }if(result2.getInt("IdRol")==2){
-                  //se agrega la modelo de la lista ///////////////////////
-                modeloList.addElement(result.getString(1));
-                //se setea el texto al nombre de la BBDD
-                texto.setText("control");
-                //se setea el modelo de la lista a la lista
-                list.setModel(modeloList);
-                 modeloList.removeElementAt(1);
-                
-                }else{
-                    //se agrega la modelo de la lista ///////////////////////
-                modeloList.addElement(result.getString(1));
-                //se setea el texto al nombre de la BBDD
-                texto.setText("control");
-                //se setea el modelo de la lista a la lista
-                list.setModel(modeloList);
-                 modeloList.removeElementAt(2);
-                 modeloList.removeElementAt(3);
-                
-                
-                
-                }
-                           
+
             }
-            
-            
-            
-            
+
+            while (result2.next()) {
+                System.out.println(result2.getString(4));
+                if ("2".equals(result2.getString(4))) {
+
+                    modeloList.removeElementAt(3);
+                }
+                if ("3".equals(result2.getString(4))) {
+
+                    modeloList.removeElementAt(2);
+                    modeloList.removeElementAt(1);
+
+                } else {
+
+                }
+            }
+
 //            modeloList.removeElementAt(1);
         } catch (Exception ex) {
 
             Logger.getLogger(loginTabla.class.getName()).log(Level.SEVERE, null, ex);
         }
         //se devuelve el objeto result con los datos de la consulta
-        
+
     }
 
     public static void borrarTabla() {
@@ -474,16 +455,13 @@ public class NewJFrame extends javax.swing.JFrame {
         }
 
     }
-  public static void guardarArchivo(){
-  
-  
-  
-  
-  
-  
-  
-  }
+
+    public static void guardarArchivo() {
+
+    }
+
     // Metodo para la insercion de datos en la tabla seleccionada en una jlist 
+
     public static JTable insertarDatos(JTable tabla, JList lista) {
         try {
             //se declara objeto PreparedStatement y se inicia a null
@@ -540,7 +518,7 @@ public class NewJFrame extends javax.swing.JFrame {
                     System.out.println("Filas afectadas: " + filasAfectadas);
                     break;
                 case 2:
-                     //se declara la sentencia de SQL como string con los valores en ? (en este caso todos los datos en la tabla roles)
+                    //se declara la sentencia de SQL como string con los valores en ? (en este caso todos los datos en la tabla roles)
                     String SQL3 = "INSERT INTO  roles VALUES (?,?)";
                     sentencia = getConex().prepareStatement(SQL3);
                     resValue1 = JOptionPane.showInputDialog("Inserte primer valor");
@@ -553,7 +531,7 @@ public class NewJFrame extends javax.swing.JFrame {
                     break;
 
                 case 3:
-                     //se declara la sentencia de SQL como string con los valores en ? (en este caso todos los datos en la tabla usuarios)
+                    //se declara la sentencia de SQL como string con los valores en ? (en este caso todos los datos en la tabla usuarios)
                     String SQL4 = "INSERT INTO  usuarios VALUES (?,?,?,?)";
                     sentencia = getConex().prepareStatement(SQL4);
                     resValue1 = JOptionPane.showInputDialog("Inserte primer valor");
