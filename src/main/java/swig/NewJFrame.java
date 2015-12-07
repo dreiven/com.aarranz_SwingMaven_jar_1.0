@@ -47,7 +47,7 @@ public class NewJFrame extends javax.swing.JFrame {
     public NewJFrame() throws SQLException {
         initComponents();
         getConex();
-        consultaInicial(modeloLista, jList1, jTextField1);
+        consultaInicial(modeloLista, jList1, jTextField1,label2);
 
     }
 
@@ -182,12 +182,15 @@ public class NewJFrame extends javax.swing.JFrame {
         jLabel1.setFont(new Font("Tahoma", Font.BOLD, 12));
         jLabel1.setText("Mostrar Tabla :");
 
+        //---- jLabel2 ----
+        jLabel2.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 12));
+
         //---- jLabel4 ----
         jLabel4.setText("Base de Datos");
 
         //---- jTextField1 ----
         jTextField1.setEditable(false);
-        jTextField1.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 11));
+        jTextField1.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 12));
         jTextField1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -242,14 +245,13 @@ public class NewJFrame extends javax.swing.JFrame {
                             .addGroup(contentPaneLayout.createParallelGroup()
                                 .addGroup(contentPaneLayout.createSequentialGroup()
                                     .addComponent(jLabel1, GroupLayout.PREFERRED_SIZE, 105, GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jLabel2, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)
-                                    .addGap(0, 0, Short.MAX_VALUE))
+                                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel2, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE))
                                 .addGroup(contentPaneLayout.createSequentialGroup()
                                     .addComponent(label3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(label2, GroupLayout.PREFERRED_SIZE, 139, GroupLayout.PREFERRED_SIZE)
-                                    .addGap(136, 136, 136))))
+                                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(label2, GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE)))
+                            .addGap(186, 186, 186))
                         .addGroup(contentPaneLayout.createSequentialGroup()
                             .addGroup(contentPaneLayout.createParallelGroup()
                                 .addGroup(contentPaneLayout.createSequentialGroup()
@@ -280,7 +282,9 @@ public class NewJFrame extends javax.swing.JFrame {
                     .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                     .addGroup(contentPaneLayout.createParallelGroup()
                         .addComponent(label3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(label2, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
+                        .addGroup(contentPaneLayout.createSequentialGroup()
+                            .addGap(0, 0, Short.MAX_VALUE)
+                            .addComponent(label2, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)))
                     .addGap(18, 18, 18)
                     .addGroup(contentPaneLayout.createParallelGroup()
                         .addComponent(jLabel1, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)
@@ -385,7 +389,7 @@ public class NewJFrame extends javax.swing.JFrame {
     }
 
     //Metodo para realizar una consulta inicial para conseguir la informacion de la BBdd y mostrar las tablas disponibles
-    public static void consultaInicial(DefaultListModel modeloList, JList list, JTextField texto) {
+    public static void consultaInicial(DefaultListModel modeloList, JList list, JTextField texto,JLabel label2) {
         //se declara objeto ResulSet pero sin inicializacion,donde se guardaran los datos de la consulta
         ResultSet result = null;
         //se declara objeto Statementt pero sin inicializacion, donde guardaremos la consulta en SQL a realizar
@@ -394,7 +398,9 @@ public class NewJFrame extends javax.swing.JFrame {
         Statement sentencia2 = null;
         ResultSet result2 = null;
 //        String usuario = label2.getText();
-        String usuario = "Israel";
+        
+        ////////////////////////NO RECOGE LA LABEL EL NOMBRE DEL USUARIO DEBE LLEGAR ANTES
+        String usuario = label2.getText();
 
         //bloque try & catch
         try {
@@ -416,29 +422,39 @@ public class NewJFrame extends javax.swing.JFrame {
                 list.setModel(modeloList);
 
             }
-
+             
+            /////////////////////lA lISTA NO ACTUALIZA CORRECTAMENTE MARCA USUARIOS Y CARGA ARCHIVOS
             while (result2.next()) {
                 System.out.println(result2.getString(4));
+                if ("1".equals(result2.getString(4))){
+                    System.out.println("Bienvenido Admin");
+                    System.out.println("Acceso completo");
+                
+                }
                 if ("2".equals(result2.getString(4))) {
 
                     modeloList.removeElementAt(3);
+                    System.out.println("Bienvenido Usuario avanzado");
+                    System.out.println("Acceso Avanzado ");
                 }
                 if ("3".equals(result2.getString(4))) {
 
                     modeloList.removeElementAt(2);
                     modeloList.removeElementAt(1);
-
+                    System.out.println("Bienvenido Usuario");
+                    System.out.println("Acceso Standar");
+                       
                 } else {
-
+                    System.out.println("Usuario de Prueba");  
+                    
+                    
                 }
             }
 
-//            modeloList.removeElementAt(1);
         } catch (Exception ex) {
 
             Logger.getLogger(loginTabla.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //se devuelve el objeto result con los datos de la consulta
 
     }
 
@@ -461,7 +477,6 @@ public class NewJFrame extends javax.swing.JFrame {
     }
 
     // Metodo para la insercion de datos en la tabla seleccionada en una jlist 
-
     public static JTable insertarDatos(JTable tabla, JList lista) {
         try {
             //se declara objeto PreparedStatement y se inicia a null

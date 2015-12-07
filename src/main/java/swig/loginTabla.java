@@ -41,8 +41,9 @@ public class loginTabla extends javax.swing.JFrame {
             if ((comprobacionUsuario(textField1.getText(), passwordField1.getText()) && (comprobacionPermisos(list1,textField1.getText())))) {
                 
                 NewJFrame ventana = new NewJFrame();
-                ventana.setVisible(true);
                 ventana.label2.setText(textField1.getText());
+                ventana.setVisible(true);
+               
             }
         } catch (Exception ex) {
             Logger.getLogger(loginTabla.class.getName()).log(Level.SEVERE, null, ex);
