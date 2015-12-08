@@ -38,15 +38,17 @@ public class NewJFrame extends javax.swing.JFrame {
      */
     ResultSet result;
     DefaultTableModel modelo = new DefaultTableModel();
-    private DefaultListModel modeloLista = new DefaultListModel();
+    public DefaultListModel modeloLista = new DefaultListModel();
 
     private void accionGuardar(ActionEvent e) {
         guardarArchivo();
     }
 
+   
+
     public NewJFrame() throws SQLException {
         initComponents();
-        getConex();
+       
         consultaInicial(modeloLista, jList1, jTextField1,label2);
 
     }
@@ -359,6 +361,7 @@ public class NewJFrame extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
+                   
                     new NewJFrame().setVisible(true);
                 } catch (SQLException ex) {
                     Logger.getLogger(NewJFrame.class.getName()).log(Level.SEVERE, null, ex);
@@ -397,10 +400,10 @@ public class NewJFrame extends javax.swing.JFrame {
 
         Statement sentencia2 = null;
         ResultSet result2 = null;
-//        String usuario = label2.getText();
+        String usuario = label2.getText();
         
         ////////////////////////NO RECOGE LA LABEL EL NOMBRE DEL USUARIO DEBE LLEGAR ANTES
-        String usuario = label2.getText();
+        
 
         //bloque try & catch
         try {
@@ -445,7 +448,7 @@ public class NewJFrame extends javax.swing.JFrame {
                     System.out.println("Acceso Standar");
                        
                 } else {
-                    System.out.println("Usuario de Prueba");  
+                    
                     
                     
                 }
