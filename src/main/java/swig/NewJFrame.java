@@ -5,6 +5,7 @@
  */
 package swig;
 
+import com.sun.imageio.plugins.jpeg.JPEG;
 import java.awt.*;
 import java.awt.event.*;
 import static java.awt.image.ImageObserver.WIDTH;
@@ -36,10 +37,13 @@ public class NewJFrame extends javax.swing.JFrame {
     /**
      * Creates new form NewJFrame
      */
+   
     ResultSet result;
     DefaultTableModel modelo = new DefaultTableModel();
     public DefaultListModel modeloLista = new DefaultListModel();
 
+    
+   int numeroRecuperado=loginTabla.numero;
     private void accionGuardar(ActionEvent e) {
         guardarArchivo();
     }
@@ -312,6 +316,7 @@ public class NewJFrame extends javax.swing.JFrame {
 
     private void accionMostrar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accionMostrar
         CargaBaseDatos(modelo, jTable1, jLabel2, jList1);
+        jLabel1.setText(loginTabla.puente.getDato());
     }//GEN-LAST:event_accionMostrar
 
     private void accionSalir(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accionSalir
@@ -330,6 +335,8 @@ public class NewJFrame extends javax.swing.JFrame {
         insertarDatos(jTable1, jList1);
     }//GEN-LAST:event_accionInsertar
 
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -363,6 +370,10 @@ public class NewJFrame extends javax.swing.JFrame {
                 try {
                    
                     new NewJFrame().setVisible(true);
+                    
+                    
+                    label2.setText(loginTabla.puente.getDato());
+                    
                 } catch (SQLException ex) {
                     Logger.getLogger(NewJFrame.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -379,7 +390,7 @@ public class NewJFrame extends javax.swing.JFrame {
         //usuario en String
         String user = "root";
         //password en String
-        String password = "";
+        String password = "manager";
         try {
             //le asignamos parametros(url , user y password) para conectar al objeto conexion a traves del metodo Druvermanager.getConnection
             conexion = DriverManager.getConnection(url, user, password);
@@ -401,6 +412,7 @@ public class NewJFrame extends javax.swing.JFrame {
         Statement sentencia2 = null;
         ResultSet result2 = null;
         String usuario = label2.getText();
+        
         
         ////////////////////////NO RECOGE LA LABEL EL NOMBRE DEL USUARIO DEBE LLEGAR ANTES
         
@@ -650,6 +662,7 @@ public class NewJFrame extends javax.swing.JFrame {
 
                 case 1:
                     try {
+                        
                         String[] columns = {"idDepartamentos", "Nombre", "Extension"};
                         modelo.setColumnIdentifiers(columns);
                         tabla.setModel(modelo);
@@ -776,6 +789,7 @@ public class NewJFrame extends javax.swing.JFrame {
     }
 
     public static void Salir() {
+//        loginTabla.visibilidad(getFrames()., true);
         System.exit(0);
     }
 

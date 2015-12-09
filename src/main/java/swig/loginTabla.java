@@ -31,22 +31,36 @@ public class loginTabla extends javax.swing.JFrame {
     private DefaultListModel modeloList = new DefaultListModel();
     ResultSet resultIni = null;
 
+    public static int numero = 5;
+
+    public static Intermedia puente = new Intermedia("Israeldksjfslkjdfghksfjdg", 1);
+
     private void accionSalir(ActionEvent e) {
         salir();
     }
 
     private void accionLogin(ActionEvent e) {
 
-        try {           
-            if ((comprobacionUsuario(textField1.getText(), passwordField1.getText()) && (comprobacionPermisos(list1,textField1.getText())))) {
-                
+        try {
+            if ((comprobacionUsuario(textField1.getText(), passwordField1.getText()) && (comprobacionPermisos(list1, textField1.getText())))) {
+
                 NewJFrame ventana = new NewJFrame();
                 NewJFrame.label2.setText(textField1.getText());
                 ventana.setVisible(true);
-               
+                this.setVisible(false);
+
             }
         } catch (Exception ex) {
             Logger.getLogger(loginTabla.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public static void visibilidad(NewJFrame ventana, boolean estado) {
+        if (estado) {
+            ventana.setVisible(true);
+        } else {
+            ventana.setVisible(false);
         }
 
     }
@@ -56,8 +70,9 @@ public class loginTabla extends javax.swing.JFrame {
         initComponents();
         //se llama al metodo consultaInicial para proporcionar datos de inicio al login
         //como el nombre de la bbd o las tablas que contiene
+
         consultaInicial(modeloList, list1);
-       
+
     }
 
     /**
@@ -235,6 +250,8 @@ public class loginTabla extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new loginTabla().setVisible(true);
+                String dato = "Israel";
+
             }
         });
     }
@@ -244,9 +261,10 @@ public class loginTabla extends javax.swing.JFrame {
 
     }
 // metodo para abrir la conexion con la bbd se le pasa 3 parametros  usuario, URL de la bbdd y  password
+
     public static Connection getConex() {
         String user = "root";
-        String pass = "";
+        String pass = "manager";
         String url = "jdbc:mysql://localhost:3306/control";
         //se crea objeto conection
         Connection conexion = null;
@@ -254,7 +272,7 @@ public class loginTabla extends javax.swing.JFrame {
             //se le pasan los parametros de entrada al objeto connection
             conexion = DriverManager.getConnection(url, user, pass);
         } catch (Exception ex) {
-        Logger.getLogger(loginTabla.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(loginTabla.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return conexion;
@@ -288,28 +306,21 @@ public class loginTabla extends javax.swing.JFrame {
     //////////////////////////////////////////////////////
     //////////////////////////////////////////////////////
     //IN PROGRESS
-    
-    public static void Mostrar(){
-    
-    
-    
-    
-    
+    public static void Mostrar() {
+
     }
-    
-    
-    public static Boolean comprobacionPermisos(JList lista,String usuario) throws SQLException {     
+
+    public static Boolean comprobacionPermisos(JList lista, String usuario) throws SQLException {
         ResultSet result2 = null;
         Statement sentencia2 = null;
-        Boolean respuesta=false;
+        Boolean respuesta = false;
         try {
 
             //se crea el objeto Statement para realizar una consulta la bbdd con los datos a traves de la conexion creada anteriormente 
             sentencia2 = getConex().createStatement();
-            result2 = sentencia2.executeQuery("SELECT '"+ usuario +"'FROM usuarios ");
-            while (result2.next() ) {
+            result2 = sentencia2.executeQuery("SELECT '" + usuario + "'FROM usuarios ");
+            while (result2.next()) {
 
-               
                 return true;
             }
 
@@ -337,7 +348,7 @@ public class loginTabla extends javax.swing.JFrame {
             Logger.getLogger(loginTabla.class.getName()).log(Level.SEVERE, null, ex);
         }
         System.out.println("No ha introducido datos correctos");
-        JOptionPane.showConfirmDialog( null,"No ha introducido datos correctos");
+        JOptionPane.showConfirmDialog(null, "No ha introducido datos correctos");
         return false;
     }
 
