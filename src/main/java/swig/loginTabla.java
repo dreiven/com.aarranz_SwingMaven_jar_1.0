@@ -264,7 +264,7 @@ public class loginTabla extends javax.swing.JFrame {
 
     public static Connection getConex() {
         String user = "root";
-        String pass = "manager";
+        String pass = "";
         String url = "jdbc:mysql://localhost:3306/control";
         //se crea objeto conection
         Connection conexion = null;

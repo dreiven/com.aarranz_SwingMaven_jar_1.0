@@ -390,7 +390,7 @@ public class NewJFrame extends javax.swing.JFrame {
         //usuario en String
         String user = "root";
         //password en String
-        String password = "manager";
+        String password = "";
         try {
             //le asignamos parametros(url , user y password) para conectar al objeto conexion a traves del metodo Druvermanager.getConnection
             conexion = DriverManager.getConnection(url, user, password);
