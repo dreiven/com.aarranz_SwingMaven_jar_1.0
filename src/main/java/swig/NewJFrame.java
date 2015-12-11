@@ -381,26 +381,6 @@ public class NewJFrame extends javax.swing.JFrame {
         });
     }
 
-    //Metodo para conseguir una conexion con la BBDD
-    public static Connection getConex() {
-        //se declara el objeto COnnection con la referencia conexion a null 
-        java.sql.Connection conexion = null;
-        //String con la direccion de la bbdd en el servidor 
-        String url = "jdbc:mysql://localhost:3306/control";
-        //usuario en String
-        String user = "root";
-        //password en String
-        String password = "";
-        try {
-            //le asignamos parametros(url , user y password) para conectar al objeto conexion a traves del metodo Druvermanager.getConnection
-            conexion = DriverManager.getConnection(url, user, password);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        //se devuelve el objeto conexion cargado con los datos url,user,password 
-        return conexion;
-    }
 
     //Metodo para realizar una consulta inicial para conseguir la informacion de la BBdd y mostrar las tablas disponibles
     public static void consultaInicial(DefaultListModel modeloList, JList list, JTextField texto,JLabel label2) {
@@ -420,8 +400,8 @@ public class NewJFrame extends javax.swing.JFrame {
         //bloque try & catch
         try {
             //se crea el objeto Statement para realizar una consulta la bbdd con los datos a traves de la conexion creada anteriormente 
-            sentencia = getConex().createStatement();
-            sentencia2 = getConex().createStatement();
+            sentencia = Utiles.getConex().createStatement();
+            sentencia2 = Utiles.getConex().createStatement();
             //se crea objeto ResulSet para almacenar el valor obtenido por la consulta SQL realizada por el obj Statement
             result = sentencia.executeQuery("SHOW FULL TABLES FROM control");
             result2 = sentencia2.executeQuery("SELECT * FROM usuarios WHERE Nombre ='" + usuario + "'");
@@ -475,7 +455,7 @@ public class NewJFrame extends javax.swing.JFrame {
 
     public static void borrarTabla() {
         try {
-            Statement sentencia = getConex().createStatement();
+            Statement sentencia = Utiles.getConex().createStatement();
             /* ejecuta la sentencia de borrado */
             int filasAfectadas;
 
@@ -511,7 +491,7 @@ public class NewJFrame extends javax.swing.JFrame {
                     //se declara la sentencia de SQL como string con los valores en ? (en este caso todos los datos en la tabla archivos)
                     String SQL = "INSERT INTO  archivos VALUES (?,?,?)";
                     //cargamos en la variable sentencia el prepared statement con la String SQL como parametro
-                    sentencia = getConex().prepareStatement(SQL);
+                    sentencia = Utiles.getConex().prepareStatement(SQL);
                     //solicitamos un primer valor por pantalla
                     resValue1 = JOptionPane.showInputDialog("Inserte primer valor");
                     //pasamos el valor String recibido a int y lo guardamos en la var int value1
@@ -536,7 +516,7 @@ public class NewJFrame extends javax.swing.JFrame {
                     //se declara la sentencia de SQL como string con los valores en ? (en este caso todos los datos en la tabla departamentos)
                     String SQL2 = "INSERT INTO  departamentos VALUES (?,?,?)";
                     //cargamos en la variable sentencia el prepared statement con la String SQL como parametro
-                    sentencia = getConex().prepareStatement(SQL2);
+                    sentencia = Utiles.getConex().prepareStatement(SQL2);
                     resValue1 = JOptionPane.showInputDialog("Inserte primer valor");
                     value1 = Integer.parseInt(resValue1);
                     value2 = JOptionPane.showInputDialog("Inserte segundo valor");
@@ -550,7 +530,7 @@ public class NewJFrame extends javax.swing.JFrame {
                 case 2:
                     //se declara la sentencia de SQL como string con los valores en ? (en este caso todos los datos en la tabla roles)
                     String SQL3 = "INSERT INTO  roles VALUES (?,?)";
-                    sentencia = getConex().prepareStatement(SQL3);
+                    sentencia = Utiles.getConex().prepareStatement(SQL3);
                     resValue1 = JOptionPane.showInputDialog("Inserte primer valor");
                     value1 = Integer.parseInt(resValue1);
                     value2 = JOptionPane.showInputDialog("Inserte segundo valor");
@@ -563,7 +543,7 @@ public class NewJFrame extends javax.swing.JFrame {
                 case 3:
                     //se declara la sentencia de SQL como string con los valores en ? (en este caso todos los datos en la tabla usuarios)
                     String SQL4 = "INSERT INTO  usuarios VALUES (?,?,?,?)";
-                    sentencia = getConex().prepareStatement(SQL4);
+                    sentencia = Utiles.getConex().prepareStatement(SQL4);
                     resValue1 = JOptionPane.showInputDialog("Inserte primer valor");
                     value1 = Integer.parseInt(resValue1);
                     value2 = JOptionPane.showInputDialog("Inserte segundo valor");
@@ -616,7 +596,7 @@ public class NewJFrame extends javax.swing.JFrame {
                         modelo.setColumnIdentifiers(columns);
                         tabla.setModel(modelo);
                         //se crea el objeto Statement para realizar una consulta la bbdd con los datos a traves de la conexion creada anteriormente 
-                        sentencia = getConex().createStatement();
+                        sentencia = Utiles.getConex().createStatement();
                         //se crea objeto ResulSet para almacenar el valor obtenido por la consulta SQL realizada por el obj Statement
                         ResultSet result = sentencia.executeQuery("SELECT * FROM archivos ");
                         //declaramos objetos para guardar los resultados obtenidos para la tabla
@@ -647,9 +627,9 @@ public class NewJFrame extends javax.swing.JFrame {
 
                         }
 
-                        if (getConex() != null) {
+                        if (Utiles.getConex() != null) {
                             try {
-                                getConex().close();
+                                Utiles.getConex().close();
                             } catch (SQLException e) {
                                 e.printStackTrace();
 
@@ -667,7 +647,7 @@ public class NewJFrame extends javax.swing.JFrame {
                         modelo.setColumnIdentifiers(columns);
                         tabla.setModel(modelo);
                         //se crea el objeto Statement para realizar una consulta la bbdd con los datos a traves de la conexion creada anteriormente 
-                        sentencia = getConex().createStatement();
+                        sentencia = Utiles.getConex().createStatement();
                         //se crea objeto ResulSet para almacenar el valor obtenido por la consulta SQL realizada por el obj Statement
                         ResultSet result = sentencia.executeQuery("SELECT * FROM departamentos ");
                         //declaramos objetos para guardar los resultados obtenidos para la tabla
@@ -698,9 +678,9 @@ public class NewJFrame extends javax.swing.JFrame {
 
                         }
 
-                        if (getConex() != null) {
+                        if (Utiles.getConex() != null) {
                             try {
-                                getConex().close();
+                                Utiles.getConex().close();
                             } catch (SQLException e) {
                                 e.printStackTrace();
 
@@ -718,7 +698,7 @@ public class NewJFrame extends javax.swing.JFrame {
                         modelo.setColumnIdentifiers(columns);
                         tabla.setModel(modelo);
                         //se crea el objeto Statement para realizar una consulta la bbdd con los datos a traves de la conexion creada anteriormente 
-                        sentencia = getConex().createStatement();
+                        sentencia = Utiles.getConex().createStatement();
                         //se crea objeto ResulSet para almacenar el valor obtenido por la consulta SQL realizada por el obj Statement
                         ResultSet result = sentencia.executeQuery("SELECT * FROM roles ");
                         //declaramos objetos para guardar los resultados obtenidos para la tabla
@@ -746,7 +726,7 @@ public class NewJFrame extends javax.swing.JFrame {
                         modelo.setColumnIdentifiers(columns);
                         tabla.setModel(modelo);
                         //se crea el objeto Statement para realizar una consulta la bbdd con los datos a traves de la conexion creada anteriormente 
-                        sentencia = getConex().createStatement();
+                        sentencia = Utiles.getConex().createStatement();
                         //se crea objeto ResulSet para almacenar el valor obtenido por la consulta SQL realizada por el obj Statement
                         ResultSet result = sentencia.executeQuery("SELECT * FROM usuarios ");
                         //declaramos objetos para guardar los resultados obtenidos para la tabla

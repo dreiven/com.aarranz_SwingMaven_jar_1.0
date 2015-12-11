@@ -260,23 +260,7 @@ public class loginTabla extends javax.swing.JFrame {
         System.exit(0);
 
     }
-// metodo para abrir la conexion con la bbd se le pasa 3 parametros  usuario, URL de la bbdd y  password
 
-    public static Connection getConex() {
-        String user = "root";
-        String pass = "";
-        String url = "jdbc:mysql://localhost:3306/control";
-        //se crea objeto conection
-        Connection conexion = null;
-        try {
-            //se le pasan los parametros de entrada al objeto connection
-            conexion = DriverManager.getConnection(url, user, pass);
-        } catch (Exception ex) {
-            Logger.getLogger(loginTabla.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return conexion;
-    }
 
     public static DefaultListModel consultaInicial(DefaultListModel modeloList, JList list) {
         ResultSet result = null;
@@ -284,7 +268,7 @@ public class loginTabla extends javax.swing.JFrame {
 
         try {
             //se crea el objeto Statement para realizar una consulta la bbdd con los datos a traves de la conexion creada anteriormente 
-            sentencia = getConex().createStatement();
+            sentencia = Utiles.getConex().createStatement();
             //se crea objeto ResulSet para almacenar el valor obtenido por la consulta SQL realizada por el obj Statement
             result = sentencia.executeQuery("SHOW FULL TABLES FROM control");
             while (result.next()) {
@@ -317,7 +301,7 @@ public class loginTabla extends javax.swing.JFrame {
         try {
 
             //se crea el objeto Statement para realizar una consulta la bbdd con los datos a traves de la conexion creada anteriormente 
-            sentencia2 = getConex().createStatement();
+            sentencia2 = Utiles.getConex().createStatement();
             result2 = sentencia2.executeQuery("SELECT '" + usuario + "'FROM usuarios ");
             while (result2.next()) {
 
@@ -337,7 +321,7 @@ public class loginTabla extends javax.swing.JFrame {
 
         try {
             //se crea el objeto Statement para realizar una consulta la bbdd con los datos a traves de la conexion creada anteriormente 
-            sentencia = getConex().createStatement();
+            sentencia = Utiles.getConex().createStatement();
             result = sentencia.executeQuery("SELECT * FROM control.usuarios WHERE Nombre = '" + user + "'AND Password ='" + pass + "'");
             while (result.next()) {
 
