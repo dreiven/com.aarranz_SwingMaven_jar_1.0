@@ -5,12 +5,9 @@
  */
 package swig;
 
-import com.sun.imageio.plugins.jpeg.JPEG;
 import java.awt.*;
 import java.awt.event.*;
 import static java.awt.image.ImageObserver.WIDTH;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -43,7 +40,7 @@ public class NewJFrame extends javax.swing.JFrame {
     public DefaultListModel modeloLista = new DefaultListModel();
 
     
-   int numeroRecuperado=loginTabla.numero;
+    public String numeroRecuperado=loginTabla.userLogin;
     private void accionGuardar(ActionEvent e) {
         guardarArchivo();
     }
@@ -53,7 +50,7 @@ public class NewJFrame extends javax.swing.JFrame {
     public NewJFrame() throws SQLException {
         initComponents();
        
-        consultaInicial(modeloLista, jList1, jTextField1,label2);
+        consultaInicial(modeloLista, jList1, jTextField1,numeroRecuperado);
 
     }
 
@@ -316,11 +313,11 @@ public class NewJFrame extends javax.swing.JFrame {
 
     private void accionMostrar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accionMostrar
         CargaBaseDatos(modelo, jTable1, jLabel2, jList1);
-        jLabel1.setText(loginTabla.puente.getDato());
+//        jLabel1.setText(loginTabla.puente.getDato());
     }//GEN-LAST:event_accionMostrar
 
     private void accionSalir(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accionSalir
-        Salir();
+        Salir(this);
     }//GEN-LAST:event_accionSalir
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -372,7 +369,7 @@ public class NewJFrame extends javax.swing.JFrame {
                     new NewJFrame().setVisible(true);
                     
                     
-                    label2.setText(loginTabla.puente.getDato());
+                    
                     
                 } catch (SQLException ex) {
                     Logger.getLogger(NewJFrame.class.getName()).log(Level.SEVERE, null, ex);
@@ -383,7 +380,7 @@ public class NewJFrame extends javax.swing.JFrame {
 
 
     //Metodo para realizar una consulta inicial para conseguir la informacion de la BBdd y mostrar las tablas disponibles
-    public static void consultaInicial(DefaultListModel modeloList, JList list, JTextField texto,JLabel label2) {
+    public static void consultaInicial(DefaultListModel modeloList, JList list, JTextField texto,String user) {
         //se declara objeto ResulSet pero sin inicializacion,donde se guardaran los datos de la consulta
         ResultSet result = null;
         //se declara objeto Statementt pero sin inicializacion, donde guardaremos la consulta en SQL a realizar
@@ -391,7 +388,7 @@ public class NewJFrame extends javax.swing.JFrame {
 
         Statement sentencia2 = null;
         ResultSet result2 = null;
-        String usuario = label2.getText();
+        String usuario = user;
         
         
         ////////////////////////NO RECOGE LA LABEL EL NOMBRE DEL USUARIO DEBE LLEGAR ANTES
@@ -755,9 +752,7 @@ public class NewJFrame extends javax.swing.JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        //para referescar la tabla despues de cada llamada al metodo , da problemas ya que desaparecen los demas componentes del panel
-//         tabla.updateUI();
-//        } 
+
         return modelo;
     }
 
@@ -768,9 +763,12 @@ public class NewJFrame extends javax.swing.JFrame {
 
     }
 
-    public static void Salir() {
-//        loginTabla.visibilidad(getFrames()., true);
-        System.exit(0);
+    public static void Salir(JFrame ventana) {
+
+        loginTabla nuevoLogin = new loginTabla();
+        Utiles.visibilidad(nuevoLogin, true);
+        ventana.setVisible(false);
+//        System.exit(0);
     }
 
 

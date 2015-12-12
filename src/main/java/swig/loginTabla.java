@@ -31,9 +31,9 @@ public class loginTabla extends javax.swing.JFrame {
     private DefaultListModel modeloList = new DefaultListModel();
     ResultSet resultIni = null;
 
-    public static int numero = 5;
+    public static String userLogin ;
 
-    public static Intermedia puente = new Intermedia("Israeldksjfslkjdfghksfjdg", 1);
+    public static Intermedia puente = new Intermedia();
 
     private void accionSalir(ActionEvent e) {
         salir();
@@ -43,9 +43,9 @@ public class loginTabla extends javax.swing.JFrame {
 
         try {
             if ((comprobacionUsuario(textField1.getText(), passwordField1.getText()) && (comprobacionPermisos(list1, textField1.getText())))) {
-
-                NewJFrame ventana = new NewJFrame();
-                NewJFrame.label2.setText(textField1.getText());
+                userLogin = textField1.getText();
+                puente.setDato(userLogin);
+                NewJFrame ventana = new NewJFrame();              
                 ventana.setVisible(true);
                 this.setVisible(false);
 
@@ -250,13 +250,14 @@ public class loginTabla extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new loginTabla().setVisible(true);
-                String dato = "Israel";
+                
 
             }
         });
     }
 
     public void salir() {
+        
         System.exit(0);
 
     }

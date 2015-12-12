@@ -18,7 +18,7 @@ public class Intermedia {
         this.dato = dato;
         this.id = id;
     }
-
+    
     public int getId() {
         return id;
     }

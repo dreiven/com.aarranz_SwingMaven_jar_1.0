@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -34,4 +35,20 @@ public class Utiles {
 
         return conexion;
     }
+      
+      public static void visibilidad(JFrame ventana, boolean estado) {
+        if (estado) {
+            ventana.setVisible(true);
+        } else {
+            ventana.setVisible(false);
+        }
+
+    }
+      
+      
+      
+      
+      
+      
+      
 }
