@@ -34,23 +34,20 @@ public class NewJFrame extends javax.swing.JFrame {
     /**
      * Creates new form NewJFrame
      */
-   
     ResultSet result;
     DefaultTableModel modelo = new DefaultTableModel();
     public DefaultListModel modeloLista = new DefaultListModel();
 
-    
-    public String numeroRecuperado=loginTabla.userLogin;
+    public String numeroRecuperado = loginTabla.userLogin;
+
     private void accionGuardar(ActionEvent e) {
         guardarArchivo();
     }
 
-   
-
     public NewJFrame() throws SQLException {
         initComponents();
-       
-        consultaInicial(modeloLista, jList1, jTextField1,numeroRecuperado);
+
+        consultaInicial(modeloLista, jList1, jTextField1, numeroRecuperado);
 
     }
 
@@ -332,8 +329,6 @@ public class NewJFrame extends javax.swing.JFrame {
         insertarDatos(jTable1, jList1);
     }//GEN-LAST:event_accionInsertar
 
-    
-    
     /**
      * @param args the command line arguments
      */
@@ -365,12 +360,9 @@ public class NewJFrame extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                   
+
                     new NewJFrame().setVisible(true);
-                    
-                    
-                    
-                    
+
                 } catch (SQLException ex) {
                     Logger.getLogger(NewJFrame.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -378,9 +370,8 @@ public class NewJFrame extends javax.swing.JFrame {
         });
     }
 
-
     //Metodo para realizar una consulta inicial para conseguir la informacion de la BBdd y mostrar las tablas disponibles
-    public static void consultaInicial(DefaultListModel modeloList, JList list, JTextField texto,String user) {
+    public static void consultaInicial(DefaultListModel modeloList, JList list, JTextField texto, String user) {
         //se declara objeto ResulSet pero sin inicializacion,donde se guardaran los datos de la consulta
         ResultSet result = null;
         //se declara objeto Statementt pero sin inicializacion, donde guardaremos la consulta en SQL a realizar
@@ -389,10 +380,7 @@ public class NewJFrame extends javax.swing.JFrame {
         Statement sentencia2 = null;
         ResultSet result2 = null;
         String usuario = user;
-        
-        
-        ////////////////////////NO RECOGE LA LABEL EL NOMBRE DEL USUARIO DEBE LLEGAR ANTES
-        
+        label2.setText(user);
 
         //bloque try & catch
         try {
@@ -414,14 +402,14 @@ public class NewJFrame extends javax.swing.JFrame {
                 list.setModel(modeloList);
 
             }
-             
+
             /////////////////////lA lISTA NO ACTUALIZA CORRECTAMENTE MARCA USUARIOS Y CARGA ARCHIVOS
             while (result2.next()) {
                 System.out.println(result2.getString(4));
-                if ("1".equals(result2.getString(4))){
+                if ("1".equals(result2.getString(4))) {
                     System.out.println("Bienvenido Admin");
                     System.out.println("Acceso completo");
-                
+
                 }
                 if ("2".equals(result2.getString(4))) {
 
@@ -435,11 +423,9 @@ public class NewJFrame extends javax.swing.JFrame {
                     modeloList.removeElementAt(1);
                     System.out.println("Bienvenido Usuario");
                     System.out.println("Acceso Standar");
-                       
+
                 } else {
-                    
-                    
-                    
+
                 }
             }
 
@@ -639,7 +625,7 @@ public class NewJFrame extends javax.swing.JFrame {
 
                 case 1:
                     try {
-                        
+
                         String[] columns = {"idDepartamentos", "Nombre", "Extension"};
                         modelo.setColumnIdentifiers(columns);
                         tabla.setModel(modelo);

@@ -31,7 +31,7 @@ public class loginTabla extends javax.swing.JFrame {
     private DefaultListModel modeloList = new DefaultListModel();
     ResultSet resultIni = null;
 
-    public static String userLogin ;
+    public static String userLogin;
 
     public static Intermedia puente = new Intermedia();
 
@@ -42,10 +42,10 @@ public class loginTabla extends javax.swing.JFrame {
     private void accionLogin(ActionEvent e) {
 
         try {
-            if ((comprobacionUsuario(textField1.getText(), passwordField1.getText()) && (comprobacionPermisos(list1, textField1.getText())))) {
+            if ((comprobacionUsuario(textField1.getText(), passwordField1.getText()) && (comprobacionPermisos(textField1.getText())))) {
                 userLogin = textField1.getText();
                 puente.setDato(userLogin);
-                NewJFrame ventana = new NewJFrame();              
+                NewJFrame ventana = new NewJFrame();
                 ventana.setVisible(true);
                 this.setVisible(false);
 
@@ -68,11 +68,6 @@ public class loginTabla extends javax.swing.JFrame {
     public loginTabla() {
 
         initComponents();
-        //se llama al metodo consultaInicial para proporcionar datos de inicio al login
-        //como el nombre de la bbd o las tablas que contiene
-
-        consultaInicial(modeloList, list1);
-
     }
 
     /**
@@ -93,8 +88,6 @@ public class loginTabla extends javax.swing.JFrame {
         label3 = new JLabel();
         button2 = new JButton();
         labl2 = new JLabel();
-        scrollPane1 = new JScrollPane();
-        list1 = new JList();
         jLabel1 = new JLabel();
 
         //======== this ========
@@ -165,18 +158,6 @@ public class loginTabla extends javax.swing.JFrame {
             labl2.setFont(labl2.getFont().deriveFont(labl2.getFont().getSize() + 2f));
             jPanel1.add(labl2);
             labl2.setBounds(10, 310, 75, 35);
-
-            //======== scrollPane1 ========
-            {
-                scrollPane1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-                scrollPane1.setBorder(null);
-
-                //---- list1 ----
-                list1.setBorder(UIManager.getBorder("TableHeader.cellBorder"));
-                scrollPane1.setViewportView(list1);
-            }
-            jPanel1.add(scrollPane1);
-            scrollPane1.setBounds(25, 365, 90, 85);
 
             //---- jLabel1 ----
             jLabel1.setIcon(new ImageIcon("C:\\Users\\PC\\Documents\\NetBeansProjects\\com.aarranz_SwingMaven_jar_1.0\\src\\main\\java\\swig\\img\\frame.png"));
@@ -250,55 +231,21 @@ public class loginTabla extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new loginTabla().setVisible(true);
-                
 
             }
         });
     }
 
     public void salir() {
-        
+
         System.exit(0);
 
     }
 
-
-    public static DefaultListModel consultaInicial(DefaultListModel modeloList, JList list) {
-        ResultSet result = null;
-        Statement sentencia = null;
-
-        try {
-            //se crea el objeto Statement para realizar una consulta la bbdd con los datos a traves de la conexion creada anteriormente 
-            sentencia = Utiles.getConex().createStatement();
-            //se crea objeto ResulSet para almacenar el valor obtenido por la consulta SQL realizada por el obj Statement
-            result = sentencia.executeQuery("SHOW FULL TABLES FROM control");
-            while (result.next()) {
-                System.out.println(result.getString(WIDTH));
-
-                modeloList.addElement(result.getString(1));
-
-                list.setModel(modeloList);
-
-            }
-
-        } catch (Exception ex) {
-            Logger.getLogger(loginTabla.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return modeloList;
-    }
-
-    //////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////
-    //IN PROGRESS
-    public static void Mostrar() {
-
-    }
-
-    public static Boolean comprobacionPermisos(JList lista, String usuario) throws SQLException {
+    public static Boolean comprobacionPermisos(String usuario) throws SQLException {
         ResultSet result2 = null;
         Statement sentencia2 = null;
-        Boolean respuesta = false;
+
         try {
 
             //se crea el objeto Statement para realizar una consulta la bbdd con los datos a traves de la conexion creada anteriormente 
@@ -333,7 +280,7 @@ public class loginTabla extends javax.swing.JFrame {
             Logger.getLogger(loginTabla.class.getName()).log(Level.SEVERE, null, ex);
         }
         System.out.println("No ha introducido datos correctos");
-        JOptionPane.showConfirmDialog(null, "No ha introducido datos correctos");
+        JOptionPane.showMessageDialog(null, "No ha introducido datos correctos");
         return false;
     }
 
@@ -349,8 +296,6 @@ public class loginTabla extends javax.swing.JFrame {
     private JLabel label3;
     private JButton button2;
     private JLabel labl2;
-    private JScrollPane scrollPane1;
-    private JList list1;
     private JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }
