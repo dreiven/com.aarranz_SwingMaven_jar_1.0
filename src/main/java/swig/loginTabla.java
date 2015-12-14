@@ -32,9 +32,9 @@ public class loginTabla extends javax.swing.JFrame {
     ResultSet resultIni = null;
 
     public static String userLogin;
-
+    //se declara variable puente de la clase intermedia para transportar los datos desde el loguin al newframe de la muestra de tabla
     public static Intermedia puente = new Intermedia();
-
+    
     private void accionSalir(ActionEvent e) {
         salir();
     }
