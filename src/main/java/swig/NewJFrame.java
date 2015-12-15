@@ -372,12 +372,13 @@ public class NewJFrame extends javax.swing.JFrame {
 
     //Metodo para realizar una consulta inicial para conseguir la informacion de la BBdd y mostrar las tablas disponibles
     public static void consultaInicial(DefaultListModel modeloList, JList list, JTextField texto, String user) {
-        //se declara objeto ResulSet pero sin inicializacion,donde se guardaran los datos de la consulta
+        //se declara objeto ResulSet pero con inicializacion null,donde se guardaran los datos de la consulta
         ResultSet result = null;
-        //se declara objeto Statementt pero sin inicializacion, donde guardaremos la consulta en SQL a realizar
+        //se declara objeto Statementt pero con inicializacion null, donde guardaremos la consulta en SQL a realizar
         Statement sentencia = null;
-
+        //se declara objeto Statementt pero con inicializacion null, donde guardaremos la consulta en SQL a realizar
         Statement sentencia2 = null;
+        //se declara objeto ResulSet pero con inicializacion null,donde se guardaran los datos de la segunda consulta
         ResultSet result2 = null;
         String usuario = user;
         label2.setText(user);
@@ -389,6 +390,9 @@ public class NewJFrame extends javax.swing.JFrame {
             sentencia2 = Utiles.getConex().createStatement();
             //se crea objeto ResulSet para almacenar el valor obtenido por la consulta SQL realizada por el obj Statement
             result = sentencia.executeQuery("SHOW FULL TABLES FROM control");
+            //se crea objeto ResulSet para almacenar el valor obtenido por la consulta SQL  en este caso 
+            //se agrage variable para comprobar bajo la clausula WHERE si el usuario aparece entre los usuarios de la bbdd
+            //de ser asi tendra datos dentro con lo cual pasara al bloque while con el metodo next() que indica si hay datos
             result2 = sentencia2.executeQuery("SELECT * FROM usuarios WHERE Nombre ='" + usuario + "'");
 
             //bloque while ,mientras result tenga datos entrar en el while
