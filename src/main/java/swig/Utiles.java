@@ -19,7 +19,7 @@ import javax.swing.JFrame;
 public class Utiles {
     
     
-    
+    //metodo para realizar la conexion con la bbdd en este caso a nivel local
       public static Connection getConex() {
         String user = "root";
         String pass = "";
