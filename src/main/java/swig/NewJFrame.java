@@ -46,7 +46,8 @@ public class NewJFrame extends javax.swing.JFrame {
 
     public NewJFrame() throws SQLException {
         initComponents();
-
+        //Metodo para realizar una consulta SQL para conseguir la informacion de la BBdd y 
+        //mostrar las tablas disponibles en el Newframe
         consultaInicial(modeloLista, jList1, jTextField1, numeroRecuperado);
 
     }

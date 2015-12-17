@@ -7,9 +7,6 @@ package swig;
 
 import java.awt.*;
 import java.awt.event.*;
-import static java.awt.image.ImageObserver.WIDTH;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -28,8 +25,7 @@ public class loginTabla extends javax.swing.JFrame {
     /**
      * Creates new form loginTabla
      */
-    private DefaultListModel modeloList = new DefaultListModel();
-    ResultSet resultIni = null;
+
 
     public static String userLogin;
     //se declara variable puente de la clase intermedia para transportar los datos desde el loguin al newframe de la muestra de tabla
