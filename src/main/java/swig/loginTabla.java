@@ -36,8 +36,9 @@ public class loginTabla extends javax.swing.JFrame {
     }
 
     private void accionLogin(ActionEvent e) {
-
+       //bloque try / catch obligatorio pra consultas sql 
         try {
+            //si las comprobaciones devuelven true ,
             if ((comprobacionUsuario(textField1.getText(), passwordField1.getText()) && (comprobacionPermisos(textField1.getText())))) {
                 userLogin = textField1.getText();
                 puente.setDato(userLogin);

@@ -440,13 +440,13 @@ public class NewJFrame extends javax.swing.JFrame {
         }
 
     }
-
+    //metodo para borrar todos los datos de la tabla
     public static void borrarTabla() {
         try {
             Statement sentencia = Utiles.getConex().createStatement();
             /* ejecuta la sentencia de borrado */
             int filasAfectadas;
-
+            //pasasmos a filasAfectadas el total de filas que se han borrado
             filasAfectadas = sentencia.executeUpdate("DELETE FROM archivos WHERE 1=1");
             System.out.println("Filas afectadas: " + filasAfectadas);
         } catch (Exception e) {

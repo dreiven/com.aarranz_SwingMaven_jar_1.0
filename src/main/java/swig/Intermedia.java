@@ -15,7 +15,7 @@ public class Intermedia {
     private String dato;
     //se declara variable de clase id  en int para transportar datos umericos 
     private int id;
-
+    //constructor de clase
     public Intermedia(String dato, int id) {
         this.dato = dato;
         this.id = id;
@@ -28,7 +28,7 @@ public class Intermedia {
     public void setId(int id) {
         this.id = id;
     }
- 
+   //constructor de clase vacio 
     public Intermedia() {
     }
 

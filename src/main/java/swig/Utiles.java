@@ -35,7 +35,7 @@ public class Utiles {
 
         return conexion;
     }
-      
+      //metodo para mostrar o quitar ventanas a traves del metodo setVisible
       public static void visibilidad(JFrame ventana, boolean estado) {
         if (estado) {
             ventana.setVisible(true);
