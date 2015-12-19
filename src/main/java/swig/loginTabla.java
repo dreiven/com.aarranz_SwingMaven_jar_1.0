@@ -268,15 +268,18 @@ public class loginTabla extends javax.swing.JFrame {
         try {
             //se crea el objeto Statement para realizar una consulta la bbdd con los datos a traves de la conexion creada anteriormente 
             sentencia = Utiles.getConex().createStatement();
+            //guardamos el contenido de la consulta SQL en el objeto result
             result = sentencia.executeQuery("SELECT * FROM control.usuarios WHERE Nombre = '" + user + "'AND Password ='" + pass + "'");
+            //sila consulta es correcta y obtiene resultados psa al while
             while (result.next()) {
-
+               //aparecen los datos devolvemos true
                 return true;
             }
 
         } catch (Exception ex) {
             Logger.getLogger(loginTabla.class.getName()).log(Level.SEVERE, null, ex);
         }
+        //
         System.out.println("No ha introducido datos correctos");
         JOptionPane.showMessageDialog(null, "No ha introducido datos correctos");
         return false;
