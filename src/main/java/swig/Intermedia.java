@@ -7,7 +7,7 @@ package swig;
 
 /**
  *
- * @author Alberto A
+ * @author Alberto Arranz Villaplana
  */
 //se crea clase intermedia para pasar los datos entre formularios 
 public class Intermedia {
@@ -15,7 +15,7 @@ public class Intermedia {
     private String dato;
     //se declara variable de clase id  en int para transportar datos umericos 
     private int id;
-    //constructor de clase
+    //constructor de clase que acepta 2 parametro un String y un int
     public Intermedia(String dato, int id) {
         this.dato = dato;
         this.id = id;

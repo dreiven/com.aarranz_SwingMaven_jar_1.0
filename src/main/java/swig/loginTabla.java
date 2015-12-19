@@ -18,7 +18,7 @@ import javax.swing.border.*;
 
 /**
  *
- * @author PC
+ * @author Alberto Arranz Villaplana
  */
 public class loginTabla extends javax.swing.JFrame {
 
@@ -30,8 +30,9 @@ public class loginTabla extends javax.swing.JFrame {
     public static String userLogin;
     //se declara variable puente de la clase intermedia para transportar los datos desde el loguin al newframe de la muestra de tabla
     public static Intermedia puente = new Intermedia();
-    
+    //evento de pulsado de boton 
     private void accionSalir(ActionEvent e) {
+        //metodo para salir del Jframe actual
         salir();
     }
 

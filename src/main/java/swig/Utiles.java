@@ -14,15 +14,18 @@ import javax.swing.JFrame;
 
 /**
  *
- * @author PC
+ * @author Alberto Arranz Villaplana
  */
 public class Utiles {
     
     
     //metodo para realizar la conexion con la bbdd en este caso a nivel local
       public static Connection getConex() {
+          //usuario para acceder a la bbdd
         String user = "root";
+        //password para acceder a la bbdd
         String pass = "";
+        //direccion de la conexion a la base de datos
         String url = "jdbc:mysql://localhost:3306/control";
         //se crea objeto conection
         Connection conexion = null;
@@ -35,7 +38,7 @@ public class Utiles {
 
         return conexion;
     }
-      //metodo para mostrar o quitar ventanas a traves del metodo setVisible
+      //metodo para mostrar o quitar ventanas a traves del metodo setVisible con parametro de Jframe y boolean
       public static void visibilidad(JFrame ventana, boolean estado) {
         if (estado) {
             ventana.setVisible(true);

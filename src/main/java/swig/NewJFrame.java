@@ -27,7 +27,7 @@ import org.jdesktop.beansbinding.AutoBinding.UpdateStrategy;
 
 /**
  *
- * @author PC
+ * @author Alberto Arranz Villaplana
  */
 public class NewJFrame extends javax.swing.JFrame {
 
@@ -409,13 +409,17 @@ public class NewJFrame extends javax.swing.JFrame {
             }
 
             /////////////////////lA lISTA NO ACTUALIZA CORRECTAMENTE MARCA USUARIOS Y CARGA ARCHIVOS
+            //mientras tenga algun resultado el objeto result2
             while (result2.next()) {
+                //muestra el numero asociado al idrol de el result
                 System.out.println(result2.getString(4));
+                //si el idrol es igual a 1
                 if ("1".equals(result2.getString(4))) {
                     System.out.println("Bienvenido Admin");
                     System.out.println("Acceso completo");
 
                 }
+                //si el idrol es igual a 2 ,que se encuentra en el objeto result
                 if ("2".equals(result2.getString(4))) {
 
                     modeloList.removeElementAt(3);
