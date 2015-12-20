@@ -419,16 +419,17 @@ public class NewJFrame extends javax.swing.JFrame {
                     System.out.println("Acceso completo");
 
                 }
-                //si el idrol es igual a 2 ,que se encuentra en el objeto result
+                //si el idrol es igual a 2 ,(que se encuentra en el objeto result)
                 if ("2".equals(result2.getString(4))) {
-
+                    //se elimina la columna 3 desde el objeto modelolist
                     modeloList.removeElementAt(3);
                     System.out.println("Bienvenido Usuario avanzado");
                     System.out.println("Acceso Avanzado ");
                 }
                 if ("3".equals(result2.getString(4))) {
-
+                //se elimina la columna 2 desde el objeto modelolist
                     modeloList.removeElementAt(2);
+                //se elimina la columna 1 desde el objeto modelolist    
                     modeloList.removeElementAt(1);
                     System.out.println("Bienvenido Usuario");
                     System.out.println("Acceso Standar");
@@ -517,6 +518,7 @@ public class NewJFrame extends javax.swing.JFrame {
                     sentencia.setString(2, value2);
                     sentencia.setString(3, value3);
                     filasAfectadas = sentencia.executeUpdate();
+                    //se muestra por pantalla un mensaje indicando la cantidad de filas modificadas
                     System.out.println("Filas afectadas: " + filasAfectadas);
                     break;
                 case 2:
@@ -529,6 +531,7 @@ public class NewJFrame extends javax.swing.JFrame {
                     sentencia.setInt(1, value1);
                     sentencia.setString(2, value2);
                     filasAfectadas = sentencia.executeUpdate();
+                    //se muestra por pantalla un mensaje indicando la cantidad de filas modificadas
                     System.out.println("Filas afectadas: " + filasAfectadas);
                     break;
 
@@ -547,6 +550,7 @@ public class NewJFrame extends javax.swing.JFrame {
                     sentencia.setString(3, value3);
                     sentencia.setInt(4, value4);
                     filasAfectadas = sentencia.executeUpdate();
+                    //se muestra por pantalla un mensaje indicando la cantidad de filas modificadas
                     System.out.println("Filas afectadas: " + filasAfectadas);
 
                     break;
