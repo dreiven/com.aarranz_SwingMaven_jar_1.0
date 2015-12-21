@@ -35,6 +35,7 @@ public class NewJFrame extends javax.swing.JFrame {
      * Creates new form NewJFrame
      */
     ResultSet result;
+    // objeto defaultTableModel
     DefaultTableModel modelo = new DefaultTableModel();
     public DefaultListModel modeloLista = new DefaultListModel();
 

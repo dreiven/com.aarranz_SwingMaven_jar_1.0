@@ -54,14 +54,7 @@ public class loginTabla extends javax.swing.JFrame {
 
     }
 
-    public static void visibilidad(NewJFrame ventana, boolean estado) {
-        if (estado) {
-            ventana.setVisible(true);
-        } else {
-            ventana.setVisible(false);
-        }
-
-    }
+  
 
     public loginTabla() {
 
