@@ -226,13 +226,13 @@ public class loginTabla extends javax.swing.JFrame {
             }
         });
     }
-
+   //metodo para salir de la aplicacion
     public void salir() {
-
+   
         System.exit(0);
 
     }
-
+    //metodo que se ocupa de la comprobacion de los permisos del usuario introducido 
     public static Boolean comprobacionPermisos(String usuario) throws SQLException {
         ResultSet result2 = null;
         Statement sentencia2 = null;

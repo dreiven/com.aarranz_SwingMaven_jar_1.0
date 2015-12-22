@@ -580,6 +580,7 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         }
         try {
+            //la variable opcion almacena el int que devuelve el metodo getSelectedIndex que corresponde con la eleccion del usuario
             opcion = lista.getSelectedIndex();
 
             switch (opcion) {
